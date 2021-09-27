@@ -14,5 +14,11 @@
     "value": "assets/dude.png",
     "frameHeight": 48,
     "frameWidth": 32
+  },
+  "cloud": {
+    "key": "cloud",
+    "value": "assets/cloud.png",
+    "frameHeight": 40,
+    "frameWidth": 100
   }
 }
