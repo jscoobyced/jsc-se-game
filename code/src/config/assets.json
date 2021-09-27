@@ -1,0 +1,18 @@
+{
+  "logo": {
+    "key": "logo",
+    "value": "assets/jsc-se-game-logo.png"
+  },
+  "platform": {
+    "key": "platform",
+    "value": "assets/platform.png",
+    "width": 800,
+    "height": 40
+  },
+  "dude": {
+    "key": "dude",
+    "value": "assets/dude.png",
+    "frameHeight": 48,
+    "frameWidth": 32
+  }
+}
