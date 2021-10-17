@@ -1,22 +1,23 @@
 import Phaser from 'phaser'
-import BaseCharacter from '../characters/BaseCharacter'
-import Hero from '../characters/players/hero'
+import Hero from '../sprites/characters/players/Hero'
 import assets from '../config/assets.json'
 import general from '../config/general.json'
+import PlayerCharacter from '../sprites/characters/PlayerCharacter'
+import Clouds from '../sprites/materials/moving/Clouds'
+import Material from '../sprites/materials/Material'
 
 export default class JscSeGameIntro extends Phaser.Scene {
-  private player: BaseCharacter = new Hero(this, assets.dude)
-  private clouds: Phaser.GameObjects.Group = null as unknown as Phaser.GameObjects.Group
+  private player: PlayerCharacter = new Hero(this, assets.dude)
+  private clouds: Material = new Clouds(this, assets.cloud, 10)
+  private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
+  private isMusicPlaying = false
 
   preload = (): void => {
     this.load.image(assets.logo.key, assets.logo.value)
     this.load.image(assets.platform.key, assets.platform.value)
-    this.load.spritesheet(assets.cloud.key, assets.cloud.value, {
-      frameWidth: assets.cloud.frameWidth,
-      frameHeight: assets.cloud.frameHeight,
-    })
-
     this.player.preload()
+    this.clouds.preload()
+    this.load.audio(assets.theme.key, [assets.theme.value])
   }
 
   create = (): void => {
@@ -37,40 +38,17 @@ export default class JscSeGameIntro extends Phaser.Scene {
 
     this.player.create()
     this.player.addCollider(platforms)
-
-    const cloudChildren = []
-    for (let i = 0; i < 10; i++) {
-      cloudChildren.push(
-        this.add
-          .sprite(
-            Phaser.Math.Between(assets.cloud.frameWidth / 2, general.width),
-            Phaser.Math.Between(150, 350),
-            assets.cloud.key,
-          )
-          .setScale(Phaser.Math.FloatBetween(0.5, 1)),
-      )
-    }
-    this.clouds = this.add.group(cloudChildren)
-
-    this.anims.create({
-      key: 'cloud',
-      frames: this.anims.generateFrameNumbers(assets.cloud.key, { start: 0, end: 2 }),
-      frameRate: 5,
-    })
+    this.clouds.create()
+    this.theme = this.game.sound.add(assets.theme.key)
   }
 
   update = (): void => {
     const cursors = this.input.keyboard.createCursorKeys()
     this.player.update(cursors)
-    this.clouds.children.iterate((child, index) => {
-      const cloud = child as Phaser.GameObjects.Sprite
-      cloud.anims.play('cloud', true)
-      if (cloud.x - cloud.width / 2 > general.width) {
-        cloud.setX(-cloud.width / 2)
-        cloud.setY(Phaser.Math.Between(150, 350))
-      } else {
-        cloud.setX(cloud.x + 0.2 + index / 10)
-      }
-    })
+    this.clouds.update()
+    if (this.player.hasInteracted() && !this.isMusicPlaying) {
+      this.isMusicPlaying = true
+      this.theme.play()
+    }
   }
 }
