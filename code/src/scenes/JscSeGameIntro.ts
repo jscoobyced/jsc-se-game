@@ -1,25 +1,22 @@
 import Phaser from 'phaser'
+import BaseCharacter from '../characters/BaseCharacter'
+import Hero from '../characters/players/hero'
 import assets from '../config/assets.json'
 import general from '../config/general.json'
 
 export default class JscSeGameIntro extends Phaser.Scene {
-  private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody =
-    null as unknown as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  private player: BaseCharacter = new Hero(this, assets.dude)
   private clouds: Phaser.GameObjects.Group = null as unknown as Phaser.GameObjects.Group
-  private lastMove = 'turn'
-  private isJumping = false
 
   preload = (): void => {
     this.load.image(assets.logo.key, assets.logo.value)
     this.load.image(assets.platform.key, assets.platform.value)
-    this.load.spritesheet(assets.dude.key, assets.dude.value, {
-      frameWidth: assets.dude.frameWidth,
-      frameHeight: assets.dude.frameHeight,
-    })
     this.load.spritesheet(assets.cloud.key, assets.cloud.value, {
       frameWidth: assets.cloud.frameWidth,
       frameHeight: assets.cloud.frameHeight,
     })
+
+    this.player.preload()
   }
 
   create = (): void => {
@@ -38,13 +35,8 @@ export default class JscSeGameIntro extends Phaser.Scene {
       .create(assets.platform.width / 2, general.height - assets.platform.height / 2, assets.platform.key)
       .refreshBody()
 
-    this.player = this.physics.add.sprite(
-      assets.platform.width / 2,
-      general.height - assets.platform.height - assets.dude.frameHeight / 2,
-      assets.dude.key,
-    )
-    this.player.setBounce(0)
-    this.player.setCollideWorldBounds(true)
+    this.player.create()
+    this.player.addCollider(platforms)
 
     const cloudChildren = []
     for (let i = 0; i < 10; i++) {
@@ -61,72 +53,15 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.clouds = this.add.group(cloudChildren)
 
     this.anims.create({
-      key: 'left',
-      frames: this.anims.generateFrameNumbers(assets.dude.key, { start: 0, end: 3 }),
-      frameRate: 10,
-      repeat: -1,
-    })
-
-    this.anims.create({
-      key: 'turn',
-      frames: [{ key: assets.dude.key, frame: 4 }],
-      frameRate: 20,
-    })
-
-    this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers(assets.dude.key, { start: 5, end: 8 }),
-      frameRate: 10,
-      repeat: -1,
-    })
-
-    this.anims.create({
-      key: 'stayLeft',
-      frames: [{ key: assets.dude.key, frame: 3 }],
-      frameRate: 20,
-    })
-
-    this.anims.create({
-      key: 'stayRight',
-      frames: [{ key: assets.dude.key, frame: 6 }],
-      frameRate: 20,
-    })
-
-    this.anims.create({
       key: 'cloud',
       frames: this.anims.generateFrameNumbers(assets.cloud.key, { start: 0, end: 2 }),
       frameRate: 5,
     })
-
-    this.physics.add.collider(this.player, platforms)
   }
 
   update = (): void => {
     const cursors = this.input.keyboard.createCursorKeys()
-    let moving = 'turn'
-    if (cursors.left.isDown) {
-      this.player.setVelocityX(-100)
-      moving = 'left'
-      this.lastMove = 'stayLeft'
-    } else if (cursors.right.isDown) {
-      this.player.setVelocityX(100)
-      moving = 'right'
-      this.lastMove = 'stayRight'
-    } else if (cursors.down.isDown) {
-      moving = 'turn'
-      this.lastMove = 'turn'
-    } else {
-      moving = this.lastMove
-      if (!this.isJumping || this.player.body.touching.down) {
-        this.player.setVelocityX(0)
-      }
-    }
-
-    if (cursors.up.isDown && this.player.body.touching.down) {
-      this.isJumping = true
-      this.player.setVelocityY(-200)
-    }
-    this.player.anims.play(moving, moving != 'turn')
+    this.player.update(cursors)
     this.clouds.children.iterate((child, index) => {
       const cloud = child as Phaser.GameObjects.Sprite
       cloud.anims.play('cloud', true)
