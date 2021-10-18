@@ -1,11 +1,17 @@
 import PlayerCharacter from '../PlayerCharacter'
+import general from '../../../config/general.json'
 
 export default class Hero extends PlayerCharacter {
   private lastMove = 'turn'
   private isJumping = false
 
-  update = (cursors: Phaser.Types.Input.Keyboard.CursorKeys): void => {
-    super.update(cursors)
+  update = (cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void => {
+    super.update(cursors, time, delta)
+    this.player.x += delta / 8
+    if (this.player.x > general.width) {
+      this.player.x = 0
+    }
+    /*
     let moving = 'turn'
     if (cursors.left.isDown) {
       this.player.setVelocityX(-100)
@@ -30,5 +36,6 @@ export default class Hero extends PlayerCharacter {
       this.player.setVelocityY(-200)
     }
     this.player.anims.play(moving, moving != 'turn')
+    */
   }
 }

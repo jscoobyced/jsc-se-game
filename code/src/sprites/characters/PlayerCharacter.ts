@@ -10,34 +10,27 @@ export default class PlayerCharacter extends BaseSprite {
     if (!this.player) {
       this.player = this.scene.physics.add.sprite(
         assets.platform.width / 2,
-        general.height - assets.platform.height - this.config.frameHeight / 2,
+        general.height - assets.platform.height - this.config.frames.frameHeight / 2,
         this.config.key,
+        this.config.start,
       )
     }
 
     this.player.setBounce(0)
-    this.player.setCollideWorldBounds(true)
-    this.config.animations.forEach((animation) => {
-      const frames: Phaser.Types.Animations.AnimationFrame[] = []
-      if (!animation.frame && (animation.start || animation.start === 0) && (animation.end || animation.end === 0)) {
-        this.scene.anims
-          .generateFrameNumbers(this.config.key, {
-            start: animation.start,
-            end: animation.end,
-          })
-          .forEach((frame) => {
-            frames.push(frame)
-          })
-      } else if (animation.frame) {
-        frames.push({ key: this.config.key, frame: animation.frame })
-      }
-      this.scene.anims.create({
-        key: animation.key,
-        frames,
-        frameRate: animation.frameRate,
-        repeat: animation.repeat,
-      })
+    const frameNames = this.scene.anims.generateFrameNames(this.config.key, {
+      start: this.config.frames.start,
+      end: this.config.frames.end,
+      zeroPad: 2,
+      prefix: '',
+      suffix: '.png',
     })
+    this.scene.anims.create({
+      key: `${this.config.key}-walk`,
+      frames: frameNames,
+      frameRate: this.config.frames.framerate,
+      repeat: this.config.frames.repeat,
+    })
+    this.player.anims.play(`${this.config.key}-walk`)
     super.create()
   }
 

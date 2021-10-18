@@ -10,10 +10,7 @@ export default class BaseSprite {
   }
 
   public preload(): void {
-    this.scene.load.spritesheet(this.config.key, this.config.value, {
-      frameWidth: this.config.frameWidth,
-      frameHeight: this.config.frameHeight,
-    })
+    this.scene.load.multiatlas(this.config.key, this.config.path, this.config.baseUrl)
   }
 
   public create(): void {
@@ -21,7 +18,7 @@ export default class BaseSprite {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
+  public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
     return
   }
 }

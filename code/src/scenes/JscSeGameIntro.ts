@@ -13,14 +13,15 @@ export default class JscSeGameIntro extends Phaser.Scene {
   private isMusicPlaying = false
 
   preload = (): void => {
+    this.load.audio(assets.theme.key, [assets.theme.value])
     this.load.image(assets.logo.key, assets.logo.value)
     this.load.image(assets.platform.key, assets.platform.value)
     this.player.preload()
     this.clouds.preload()
-    this.load.audio(assets.theme.key, [assets.theme.value])
   }
 
   create = (): void => {
+    this.theme = this.game.sound.add(assets.theme.key)
     const logo = this.add.image(general.width / 2, 70, assets.logo.key)
     this.tweens.add({
       targets: logo,
@@ -39,16 +40,15 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.player.create()
     this.player.addCollider(platforms)
     this.clouds.create()
-    this.theme = this.game.sound.add(assets.theme.key)
   }
 
-  update = (): void => {
+  update = (time: number, delta: number): void => {
     const cursors = this.input.keyboard.createCursorKeys()
-    this.player.update(cursors)
-    this.clouds.update()
+    this.player.update(cursors, time, delta)
+    this.clouds.update(cursors, time, delta)
     if (!this.game.sound.locked && !this.isMusicPlaying) {
       this.isMusicPlaying = true
-      this.theme.play()
+      // this.theme.play()
     }
   }
 }
