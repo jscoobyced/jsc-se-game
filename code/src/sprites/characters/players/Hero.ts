@@ -10,15 +10,12 @@ export default class Hero extends PlayerCharacter {
     if (cursors.left.isDown) {
       this.player.setVelocityX(-100)
       moving = 'left'
-      this.hasTakenAction = true
       this.lastMove = 'stayLeft'
     } else if (cursors.right.isDown) {
-      this.hasTakenAction = true
       this.player.setVelocityX(100)
       moving = 'right'
       this.lastMove = 'stayRight'
     } else if (cursors.down.isDown) {
-      this.hasTakenAction = true
       moving = 'turn'
       this.lastMove = 'turn'
     } else {
@@ -29,7 +26,6 @@ export default class Hero extends PlayerCharacter {
     }
 
     if (cursors.up.isDown && this.player.body.touching.down) {
-      this.hasTakenAction = true
       this.isJumping = true
       this.player.setVelocityY(-200)
     }

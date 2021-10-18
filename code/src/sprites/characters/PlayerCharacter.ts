@@ -5,7 +5,6 @@ import BaseSprite from '../BaseSprite'
 export default class PlayerCharacter extends BaseSprite {
   protected player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody =
     null as unknown as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-  protected hasTakenAction = false
 
   public create(): void {
     if (!this.player) {
@@ -50,9 +49,5 @@ export default class PlayerCharacter extends BaseSprite {
       | Phaser.GameObjects.Group[],
   ): void => {
     this.scene.physics.add.collider(this.player, collideWith)
-  }
-
-  hasInteracted = (): boolean => {
-    return this.hasTakenAction
   }
 }

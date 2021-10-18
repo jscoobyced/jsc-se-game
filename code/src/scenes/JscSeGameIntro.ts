@@ -46,7 +46,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
     const cursors = this.input.keyboard.createCursorKeys()
     this.player.update(cursors)
     this.clouds.update()
-    if (this.player.hasInteracted() && !this.isMusicPlaying) {
+    if (!this.game.sound.locked && !this.isMusicPlaying) {
       this.isMusicPlaying = true
       this.theme.play()
     }
