@@ -7,14 +7,14 @@ import Clouds from '../sprites/materials/moving/Clouds'
 import Material from '../sprites/materials/Material'
 
 export default class JscSeGameIntro extends Phaser.Scene {
-  private player: PlayerCharacter = new Hero(this, assets.dude)
+  private player: PlayerCharacter = new Hero(this, assets.mumu)
   private clouds: Material = new Clouds(this, assets.cloud, 10)
   private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
   private isMusicPlaying = false
 
   preload = (): void => {
     this.load.audio(assets.theme.key, [assets.theme.value])
-    this.load.image(assets.logo.key, assets.logo.value)
+    //this.load.image(assets.logo.key, assets.logo.value)
     this.load.image(assets.platform.key, assets.platform.value)
     this.player.preload()
     this.clouds.preload()
@@ -22,6 +22,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
 
   create = (): void => {
     this.theme = this.game.sound.add(assets.theme.key)
+    /*
     const logo = this.add.image(general.width / 2, 70, assets.logo.key)
     this.tweens.add({
       targets: logo,
@@ -31,7 +32,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
       yoyo: true,
       repeat: -1,
     })
-
+*/
     const platforms = this.physics.add.staticGroup()
     platforms
       .create(assets.platform.width / 2, general.height - assets.platform.height / 2, assets.platform.key)

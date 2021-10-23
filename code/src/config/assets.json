@@ -24,6 +24,21 @@
     "baseUrl": "assets/images",
     "start": "05.png"
   },
+  "mumu": {
+    "key": "mumu",
+    "value": "assets/images/mumu.png",
+    "frames": {
+      "frameHeight": 56,
+      "frameWidth": 52,
+      "start": 1,
+      "end": 6,
+      "framerate": 12,
+      "repeat": -1
+    },
+    "path": "assets/images/mumu.json",
+    "baseUrl": "assets/images",
+    "start": "02.png"
+  },
   "cloud": {
     "key": "cloud",
     "value": "assets/images/cloud.png",
