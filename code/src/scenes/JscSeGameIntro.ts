@@ -14,7 +14,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
 
   preload = (): void => {
     this.load.audio(assets.theme.key, [assets.theme.value])
-    //this.load.image(assets.logo.key, assets.logo.value)
+    this.load.image(assets.logo.key, assets.logo.value)
     this.load.image(assets.platform.key, assets.platform.value)
     this.player.preload()
     this.clouds.preload()
@@ -22,17 +22,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
 
   create = (): void => {
     this.theme = this.game.sound.add(assets.theme.key)
-    /*
-    const logo = this.add.image(general.width / 2, 70, assets.logo.key)
-    this.tweens.add({
-      targets: logo,
-      y: 100,
-      duration: 1000,
-      ease: 'Sine.inOut',
-      yoyo: true,
-      repeat: -1,
-    })
-*/
+
     const platforms = this.physics.add.staticGroup()
     platforms
       .create(assets.platform.width / 2, general.height - assets.platform.height / 2, assets.platform.key)
@@ -41,6 +31,16 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.player.create()
     this.player.addCollider(platforms)
     this.clouds.create()
+
+    const logo = this.add.image(general.width / 2, assets.logo.height / 2, assets.logo.key)
+    this.tweens.add({
+      targets: logo,
+      y: 100,
+      duration: 1000,
+      ease: 'Sine.inOut',
+      yoyo: true,
+      repeat: -1,
+    })
   }
 
   update = (time: number, delta: number): void => {

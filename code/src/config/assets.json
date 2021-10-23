@@ -1,7 +1,9 @@
 {
   "logo": {
     "key": "logo",
-    "value": "assets/images/jsc-se-game-logo.png"
+    "value": "assets/images/mumu-adventures.png",
+    "height": 256,
+    "width": 512
   },
   "platform": {
     "key": "platform",
