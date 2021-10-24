@@ -1,9 +1,9 @@
 import Phaser from 'phaser'
 import config from './config'
-import JscSeGameIntro from './scenes/JscSeGameIntro'
+import JscMaGameIntro from './scenes/JscMaGameIntro'
 
 new Phaser.Game(
   Object.assign(config, {
-    scene: [JscSeGameIntro],
+    scene: [JscMaGameIntro],
   }),
 )
