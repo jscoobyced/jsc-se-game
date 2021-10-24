@@ -1,8 +1,8 @@
-# JSC Software Engineer Game
+# JSC Mumu Adventures
 
-What is more exciting and challenging than the life of a Software Engineer?  
-If you know, then you will enjoy this game as it allows you to live (or re-live) such experience.  
-If you don't know, then you will enjoy this game by discovering how your life could have been!
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4290195d-5682-4833-907a-c173d3b9a630/deploy-status)](https://app.netlify.com/sites/jsc-mu-game/deploys)
+
+These are the adventures of Mumu, a courageous adventurer. She is equiped with her wit and bravery to defeat the evil Blue Queen.
 
 ## How to play
 
