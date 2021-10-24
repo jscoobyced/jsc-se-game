@@ -13,7 +13,6 @@ export default class LightSwitch extends Material {
       this.config.key,
       this.config.start,
     )
-    this.material.setScale(0.6, 0.6)
     this.frameNames = this.scene.anims.generateFrameNames(this.config.key, {
       start: this.config.frames.start,
       end: this.config.frames.end,
