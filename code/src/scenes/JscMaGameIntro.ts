@@ -1,13 +1,13 @@
 import Phaser from 'phaser'
-import Hero from '../sprites/characters/players/Hero'
+import IntroHero from '../sprites/characters/players/IntroHero'
 import assets from '../config/assets.json'
 import general from '../config/general.json'
-import PlayerCharacter from '../sprites/characters/PlayerCharacter'
+import NonPlayerCharacter from '../sprites/characters/NonPlayerCharacter'
 import Clouds from '../sprites/materials/moving/Clouds'
 import Material from '../sprites/materials/Material'
 
 export default class JscSeGameIntro extends Phaser.Scene {
-  private player: PlayerCharacter = new Hero(this, assets.mumu)
+  private player: NonPlayerCharacter = new IntroHero(this, assets.mumu)
   private clouds: Material = new Clouds(this, assets.cloud, 10)
   private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
   private isMusicPlaying = false

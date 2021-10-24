@@ -1,7 +1,7 @@
 {
-  "name": "jsc-se-game",
+  "name": "jsc-mu-game",
   "version": "1.0.0",
-  "description": "A game about the life of a Software Engineer.",
+  "description": "A game about the adventures of Mumu.",
   "main": "index.js",
   "author": "Cédric Rochefolle",
   "repository": {
