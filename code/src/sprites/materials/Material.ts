@@ -2,37 +2,19 @@ import { AssetDefinition } from '../../models/common'
 import BaseSprite from '../BaseSprite'
 
 export default class Material extends BaseSprite {
-  protected material: Phaser.GameObjects.Group = null as unknown as Phaser.GameObjects.Group
-  protected materialCount = 1
+  protected material!: Phaser.GameObjects.Sprite
 
-  public constructor(scene: Phaser.Scene, config: AssetDefinition, materialCount: number) {
+  public constructor(scene: Phaser.Scene, config: AssetDefinition) {
     super(scene, config)
-    this.materialCount = materialCount
+  }
+
+  public preload(): void {
+    this.scene.load.multiatlas(this.config.key, this.config.path, this.config.baseUrl)
+    super.preload()
   }
 
   public create(): void {
-    if (!this.material) {
-      const materialChildren: Phaser.GameObjects.GameObject[] = []
-      this.material = this.scene.add.group(materialChildren)
-    }
-
-    const frameNames = this.scene.anims.generateFrameNames(this.config.key, {
-      start: this.config.frames.start,
-      end: this.config.frames.end,
-      zeroPad: 2,
-      prefix: '',
-      suffix: '.png',
-    })
-    this.scene.anims.create({
-      key: `${this.config.key}-walk`,
-      frames: frameNames,
-      frameRate: this.config.frames.framerate,
-      repeat: this.config.frames.repeat,
-    })
-    this.material.children.iterate((child) => {
-      const material = child as Phaser.GameObjects.Sprite
-      material.anims.play(`${this.config.key}-walk`, true)
-    })
+    return
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

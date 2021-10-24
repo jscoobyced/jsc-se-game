@@ -10,7 +10,7 @@ export default class BaseSprite {
   }
 
   public preload(): void {
-    this.scene.load.multiatlas(this.config.key, this.config.path, this.config.baseUrl)
+    return
   }
 
   public create(): void {

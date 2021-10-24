@@ -1,7 +1,7 @@
 import general from '../../../config/general.json'
-import Material from '../Material'
+import AnimatedMaterial from '../AnimatedMaterial'
 
-export default class Clouds extends Material {
+export default class Clouds extends AnimatedMaterial {
   public create = (): void => {
     const materialChildren: Phaser.GameObjects.GameObject[] = []
     for (let i = 0; i < this.materialCount; i++) {

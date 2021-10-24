@@ -3,8 +3,12 @@ import general from '../../config/general.json'
 import BaseSprite from '../BaseSprite'
 
 export default class NonPlayerCharacter extends BaseSprite {
-  protected player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody =
-    null as unknown as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  protected player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
+  public preload(): void {
+    this.scene.load.multiatlas(this.config.key, this.config.path, this.config.baseUrl)
+    super.preload()
+  }
 
   public create(): void {
     if (!this.player) {

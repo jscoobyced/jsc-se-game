@@ -4,12 +4,15 @@ import assets from '../config/assets.json'
 import general from '../config/general.json'
 import NonPlayerCharacter from '../sprites/characters/NonPlayerCharacter'
 import Clouds from '../sprites/materials/moving/Clouds'
+import AnimatedMaterial from '../sprites/materials/AnimatedMaterial'
 import Material from '../sprites/materials/Material'
+import LightSwitch from '../sprites/materials/LightSwitch'
 
 export default class JscSeGameIntro extends Phaser.Scene {
   private player: NonPlayerCharacter = new IntroHero(this, assets.mumu)
-  private clouds: Material = new Clouds(this, assets.cloud, 10)
+  private clouds: AnimatedMaterial = new Clouds(this, assets.cloud, 10)
   private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
+  private switch: Material = new LightSwitch(this, assets.switch)
   private isMusicPlaying = false
 
   preload = (): void => {
@@ -18,6 +21,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.load.image(assets.platform.key, assets.platform.value)
     this.player.preload()
     this.clouds.preload()
+    this.switch.preload()
   }
 
   create = (): void => {
@@ -31,6 +35,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.player.create()
     this.player.addCollider(platforms)
     this.clouds.create()
+    this.switch.create()
 
     const logo = this.add.image(general.width / 2, assets.logo.height / 2, assets.logo.key)
     this.tweens.add({

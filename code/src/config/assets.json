@@ -56,6 +56,21 @@
     "baseUrl": "assets/images",
     "start": "02.png"
   },
+  "switch": {
+    "key": "switch",
+    "value": "assets/images/switch.png",
+    "frames": {
+      "frameHeight": 100,
+      "frameWidth": 128,
+      "start": 1,
+      "end": 2,
+      "framerate": 1,
+      "repeat": -1
+    },
+    "path": "assets/images/switch.json",
+    "baseUrl": "assets/images",
+    "start": "01.png"
+  },
   "theme": {
     "key": "theme",
     "value": "assets/audio/mumu-adventures-theme-1.mp3"
