@@ -38,6 +38,14 @@ export default class NonPlayerCharacter extends BaseSprite {
     super.create()
   }
 
+  public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
+    super.update(cursors, time, delta)
+    this.player.x += delta / 8
+    if (this.player.x > general.width) {
+      this.player.x = 0
+    }
+  }
+
   addCollider = (
     collideWith:
       | Phaser.GameObjects.GameObject

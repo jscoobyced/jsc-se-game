@@ -30,29 +30,14 @@
     "key": "mumu",
     "value": "assets/images/mumu.png",
     "frames": {
-      "frameHeight": 56,
-      "frameWidth": 52,
-      "start": 1,
-      "end": 6,
+      "frameHeight": 85,
+      "frameWidth": 85,
+      "start": 5,
+      "end": 8,
       "framerate": 12,
       "repeat": -1
     },
     "path": "assets/images/mumu.json",
-    "baseUrl": "assets/images",
-    "start": "02.png"
-  },
-  "cloud": {
-    "key": "cloud",
-    "value": "assets/images/cloud.png",
-    "frames": {
-      "frameHeight": 40,
-      "frameWidth": 100,
-      "start": 1,
-      "end": 3,
-      "framerate": 5,
-      "repeat": -1
-    },
-    "path": "assets/images/clouds.json",
     "baseUrl": "assets/images",
     "start": "02.png"
   },

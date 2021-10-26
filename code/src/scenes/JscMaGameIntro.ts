@@ -1,16 +1,12 @@
 import Phaser from 'phaser'
-import IntroHero from '../sprites/characters/players/IntroHero'
 import assets from '../config/assets.json'
 import general from '../config/general.json'
 import NonPlayerCharacter from '../sprites/characters/NonPlayerCharacter'
-import Clouds from '../sprites/materials/moving/Clouds'
-import AnimatedMaterial from '../sprites/materials/AnimatedMaterial'
 import Material from '../sprites/materials/Material'
-import LightSwitch from '../sprites/materials/LightSwitch'
+import LightSwitch from '../sprites/materials/static/LightSwitch'
 
 export default class JscSeGameIntro extends Phaser.Scene {
-  private player: NonPlayerCharacter = new IntroHero(this, assets.mumu)
-  private clouds: AnimatedMaterial = new Clouds(this, assets.cloud, 10)
+  private player: NonPlayerCharacter = new NonPlayerCharacter(this, assets.mumu)
   private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
   private switch: Material = new LightSwitch(this, assets.switch)
   private isMusicPlaying = false
@@ -20,7 +16,6 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.load.image(assets.logo.key, assets.logo.value)
     this.load.image(assets.platform.key, assets.platform.value)
     this.player.preload()
-    this.clouds.preload()
     this.switch.preload()
   }
 
@@ -34,7 +29,6 @@ export default class JscSeGameIntro extends Phaser.Scene {
 
     this.player.create()
     this.player.addCollider(platforms)
-    this.clouds.create()
     this.switch.create()
 
     const logo = this.add.image(general.width / 2, assets.logo.height / 2, assets.logo.key)
@@ -51,7 +45,6 @@ export default class JscSeGameIntro extends Phaser.Scene {
   update = (time: number, delta: number): void => {
     const cursors = this.input.keyboard.createCursorKeys()
     this.player.update(cursors, time, delta)
-    this.clouds.update(cursors, time, delta)
     if (!this.game.sound.locked && !this.isMusicPlaying) {
       this.isMusicPlaying = true
       this.theme.play()
