@@ -1,53 +1,69 @@
 import Phaser from 'phaser'
 import assets from '../config/assets.json'
-import general from '../config/general.json'
-import NonPlayerCharacter from '../sprites/characters/NonPlayerCharacter'
+import { GameConfig } from '../models/common'
+import Hero from '../sprites/characters/players/Hero'
 import Material from '../sprites/materials/Material'
+import Grass from '../sprites/materials/static/Grass'
 import LightSwitch from '../sprites/materials/static/LightSwitch'
 
 export default class JscSeGameIntro extends Phaser.Scene {
-  private player: NonPlayerCharacter = new NonPlayerCharacter(this, assets.mumu)
   private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
   private switch: Material = new LightSwitch(this, assets.switch)
+  private grass: Material = new Grass(this, assets.grass)
+  private player = new Hero(this, assets.mumu)
   private isMusicPlaying = false
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+  private logo!: Phaser.GameObjects.Image
+  private gameConfig!: GameConfig
 
   preload = (): void => {
     this.load.audio(assets.theme.key, [assets.theme.value])
     this.load.image(assets.logo.key, assets.logo.value)
-    this.load.image(assets.platform.key, assets.platform.value)
-    this.player.preload()
+    this.grass.preload()
     this.switch.preload()
+    this.player.preload()
+    this.gameConfig = this.game.config as GameConfig
   }
 
   create = (): void => {
     this.theme = this.game.sound.add(assets.theme.key, { volume: 0.5, loop: true })
 
-    const platforms = this.physics.add.staticGroup()
-    platforms
-      .create(assets.platform.width / 2, general.height - assets.platform.height / 2, assets.platform.key)
-      .refreshBody()
-
-    this.player.create()
-    this.player.addCollider(platforms)
+    this.grass.create()
     this.switch.create()
+    this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 2, assets.logo.key)
+    this.gameConfig.showCommands = true
 
-    const logo = this.add.image(general.width / 2, assets.logo.height / 2, assets.logo.key)
     this.tweens.add({
-      targets: logo,
+      targets: this.logo,
       y: 100,
       duration: 1000,
       ease: 'Sine.inOut',
       yoyo: true,
       repeat: -1,
     })
+
+    this.player.create()
+
+    this.cursors = this.input.keyboard.createCursorKeys()
+    this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M).on('up', () => {
+      this.gameConfig.showCommands = !this.gameConfig.showCommands
+    })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update = (time: number, delta: number): void => {
-    const cursors = this.input.keyboard.createCursorKeys()
-    this.player.update(cursors, time, delta)
+    this.player.update(this.cursors, time, delta)
+    if (!this.gameConfig.showCommands) {
+      this.logo.destroy()
+    }
+    this.toggleCommands(this.gameConfig.showCommands)
     if (!this.game.sound.locked && !this.isMusicPlaying) {
       this.isMusicPlaying = true
       this.theme.play()
     }
+  }
+
+  private toggleCommands = (show: boolean): void => {
+    show ? this.switch.show() : this.switch.hide()
   }
 }

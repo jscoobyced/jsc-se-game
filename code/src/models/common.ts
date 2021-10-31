@@ -6,12 +6,13 @@ export type Frames = {
   framerate?: number
   repeat?: number
 }
-
 export type AssetDefinition = {
   key: string
   value: string
-  start?: string
+  width: number
+  height: number
   path?: string
-  baseUrl?: string
-  frames: Frames
+  frames?: Frames
 }
+
+export type GameConfig = Phaser.Core.Config & { showCommands: boolean }

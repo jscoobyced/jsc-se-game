@@ -5,56 +5,30 @@
     "height": 256,
     "width": 512
   },
-  "platform": {
-    "key": "platform",
-    "value": "assets/images/platform.png",
-    "width": 800,
-    "height": 40
-  },
-  "dude": {
-    "key": "dude",
-    "value": "assets/images/dude.png",
-    "frames": {
-      "frameHeight": 48,
-      "frameWidth": 32,
-      "start": 6,
-      "end": 9,
-      "framerate": 10,
-      "repeat": -1
-    },
-    "path": "assets/images/dude.json",
-    "baseUrl": "assets/images",
-    "start": "05.png"
-  },
   "mumu": {
     "key": "mumu",
     "value": "assets/images/mumu.png",
+    "height": 85,
+    "width": 680,
     "frames": {
-      "frameHeight": 85,
       "frameWidth": 85,
-      "start": 5,
-      "end": 8,
-      "framerate": 12,
-      "repeat": -1
+      "frameHeight": 85
     },
-    "path": "assets/images/mumu.json",
-    "baseUrl": "assets/images",
-    "start": "02.png"
+    "path": "assets/images/mumu.json"
   },
   "switch": {
     "key": "switch",
     "value": "assets/images/switch.png",
-    "frames": {
-      "frameHeight": 100,
-      "frameWidth": 128,
-      "start": 1,
-      "end": 2,
-      "framerate": 1,
-      "repeat": -1
-    },
-    "path": "assets/images/switch.json",
-    "baseUrl": "assets/images",
-    "start": "01.png"
+    "height": 100,
+    "width": 128,
+    "path": "assets/images/switch.json"
+  },
+  "grass": {
+    "key": "grass",
+    "value": "assets/images/grass.png",
+    "height": 8,
+    "width": 28,
+    "path": "assets/images/grass.json"
   },
   "theme": {
     "key": "theme",

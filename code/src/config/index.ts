@@ -18,4 +18,5 @@ export default {
       debug: false,
     },
   },
+  showTitle: true,
 }

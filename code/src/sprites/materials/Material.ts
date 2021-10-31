@@ -1,5 +1,6 @@
 import { AssetDefinition } from '../../models/common'
 import BaseSprite from '../BaseSprite'
+import general from '../../config/general.json'
 
 export default class Material extends BaseSprite {
   protected material!: Phaser.GameObjects.Sprite
@@ -9,12 +10,20 @@ export default class Material extends BaseSprite {
   }
 
   public preload(): void {
-    this.scene.load.multiatlas(this.config.key, this.config.path, this.config.baseUrl)
+    this.scene.load.multiatlas(this.config.key, this.config.path, general.baseUrls.images)
     super.preload()
   }
 
   public create(): void {
     return
+  }
+
+  public show(): void {
+    this.material.visible = true
+  }
+
+  public hide(): void {
+    this.material.visible = false
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

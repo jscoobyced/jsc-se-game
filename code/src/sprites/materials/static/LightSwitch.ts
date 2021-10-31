@@ -1,29 +1,25 @@
 import Material from '../Material'
 
 export default class LightSwitch extends Material {
-  private isOn = true
+  private isOn = false
   private frameNames!: Phaser.Types.Animations.AnimationFrame[]
 
   public create(): void {
     super.create()
 
-    this.material = this.scene.physics.add.staticSprite(
-      this.scene.scale.width - 50,
-      50,
-      this.config.key,
-      this.config.start,
-    )
+    this.material = this.scene.physics.add.staticSprite(this.gameWidth() - 50, 50, this.config.key, '01.png')
     this.frameNames = this.scene.anims.generateFrameNames(this.config.key, {
-      start: this.config.frames.start,
-      end: this.config.frames.end,
+      start: 1,
+      end: 2,
       zeroPad: 2,
       prefix: '',
       suffix: '.png',
     })
-    this.material.setFrame(this.frameNames[0].frame as string)
+    this.material.setFrame(this.frameNames[1].frame as string)
     this.material.setInteractive().on(Phaser.Input.Events.POINTER_UP, () => {
       this.toggleMusic()
     })
+    this.scene.sound.mute = !this.isOn
   }
 
   private toggleMusic = () => {

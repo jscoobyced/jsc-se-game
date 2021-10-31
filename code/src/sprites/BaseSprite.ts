@@ -1,4 +1,4 @@
-import { AssetDefinition } from '../models/common'
+import { AssetDefinition, GameConfig } from '../models/common'
 
 export default class BaseSprite {
   protected scene: Phaser.Scene
@@ -20,5 +20,25 @@ export default class BaseSprite {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
     return
+  }
+
+  public show(): void {
+    return
+  }
+
+  public hide(): void {
+    return
+  }
+
+  protected gameWidth = (): number => {
+    return this.scene.game.canvas.width
+  }
+
+  protected gameHeight = (): number => {
+    return this.scene.game.canvas.height
+  }
+
+  protected gameConfig = (): GameConfig => {
+    return this.scene.game.config as GameConfig
   }
 }
