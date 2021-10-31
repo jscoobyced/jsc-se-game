@@ -8,6 +8,10 @@ export default class Hero extends BaseSprite {
   private defaultHeight = 85
   private player!: Phaser.Types.Physics.Arcade.SpriteWithStaticBody
   private currentAnimation!: false | Phaser.Animations.Animation
+  private pointerRight = false
+  private pointerLeft = false
+  private pointerUp = false
+  private pointerDown = false
 
   preload(): void {
     super.preload()
@@ -59,27 +63,28 @@ export default class Hero extends BaseSprite {
 
   public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
     super.update(cursors, time, delta)
+    this.updatePointerPosition()
     let moveX = 0
     let moveY = 0
-    if (cursors.right.isDown) {
+    if (cursors.right.isDown || this.pointerRight) {
       this.updateAnimation(this.walkRightAnimation)
       moveX = delta / 8
       if (this.player.x > this.gameWidth()) {
         this.player.x = 0
       }
-    } else if (cursors.left.isDown) {
+    } else if (cursors.left.isDown || this.pointerLeft) {
       this.updateAnimation(this.walkLeftAnimation)
       moveX = -delta / 8
       if (this.player.x < 0) {
         this.player.x = this.gameWidth()
       }
     }
-    if (cursors.down.isDown) {
+    if (cursors.down.isDown || this.pointerDown) {
       moveY = delta / 8
       if (this.player.y > this.gameHeight()) {
         this.player.y = 0
       }
-    } else if (cursors.up.isDown) {
+    } else if (cursors.up.isDown || this.pointerUp) {
       moveY = -delta / 8
       if (this.player.y < 0) {
         this.player.y = this.gameHeight()
@@ -97,6 +102,28 @@ export default class Hero extends BaseSprite {
     this.player.x += moveX
     this.player.y += moveY
     return
+  }
+
+  private updatePointerPosition = (): void => {
+    this.pointerRight = false
+    this.pointerLeft = false
+    this.pointerUp = false
+    this.pointerDown = false
+    if (!this.scene.input.activePointer.isDown) return
+    const x = this.scene.input.activePointer.x
+    const y = this.scene.input.activePointer.y
+    if (x > (3 * this.gameWidth()) / 4) {
+      this.pointerRight = true
+    }
+    if (x < this.gameWidth() / 4) {
+      this.pointerLeft = true
+    }
+    if (y > (3 * this.gameHeight()) / 4) {
+      this.pointerDown = true
+    }
+    if (y < this.gameHeight() / 4) {
+      this.pointerUp = true
+    }
   }
 
   private updateAnimation = (newAnimation: false | Phaser.Animations.Animation) => {
