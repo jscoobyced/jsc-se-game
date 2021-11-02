@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import assets from '../config/assets.json'
+import MapManager from '../maps/MapManager'
 import { GameConfig } from '../models/common'
 import Hero from '../sprites/characters/players/Hero'
 import Material from '../sprites/materials/Material'
@@ -10,19 +11,23 @@ export default class JscSeGameIntro extends Phaser.Scene {
   private theme: Phaser.Sound.BaseSound = null as unknown as Phaser.Sound.BaseSound
   private switch: Material = new LightSwitch(this, assets.switch)
   private grass: Material = new Grass(this, assets.grass)
-  private player = new Hero(this, assets.mumu)
+  private player!: Hero
   private isMusicPlaying = false
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private logo!: Phaser.GameObjects.Image
   private gameConfig!: GameConfig
+  private currentMap!: number
+  private mapManager: MapManager = new MapManager()
 
   preload = (): void => {
     this.load.audio(assets.theme.key, [assets.theme.value])
     this.load.image(assets.logo.key, assets.logo.value)
     this.grass.preload()
     this.switch.preload()
-    this.player.preload()
     this.gameConfig = this.game.config as GameConfig
+    this.currentMap = this.mapManager.mapId()
+    this.player = new Hero(this, assets.mumu, this.mapManager)
+    this.player.preload()
   }
 
   create = (): void => {
@@ -60,6 +65,10 @@ export default class JscSeGameIntro extends Phaser.Scene {
     if (!this.game.sound.locked && !this.isMusicPlaying) {
       this.isMusicPlaying = true
       this.theme.play()
+    }
+    if (this.currentMap != this.mapManager.mapId()) {
+      this.currentMap = this.mapManager.mapId()
+      this.grass.renew()
     }
   }
 

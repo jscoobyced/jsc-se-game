@@ -71,26 +71,30 @@ export default class Hero extends BaseSprite {
       moveX = delta / 8
       if (this.player.x > this.gameWidth()) {
         this.player.x = 0
+        this.mapManager.east()
       }
     } else if (cursors.left.isDown || this.pointerLeft) {
       this.updateAnimation(this.walkLeftAnimation)
       moveX = -delta / 8
       if (this.player.x < 0) {
         this.player.x = this.gameWidth()
+        this.mapManager.west()
       }
     }
     if (cursors.down.isDown || this.pointerDown) {
       moveY = delta / 8
       if (this.player.y > this.gameHeight()) {
         this.player.y = 0
+        this.mapManager.south()
       }
     } else if (cursors.up.isDown || this.pointerUp) {
       moveY = -delta / 8
       if (this.player.y < 0) {
         this.player.y = this.gameHeight()
+        this.mapManager.north()
       }
     }
-    if (moveX != 0 || moveY != 0) {
+    if (this.gameConfig().showCommands && (moveX != 0 || moveY != 0)) {
       this.gameConfig().showCommands = false
     }
 
