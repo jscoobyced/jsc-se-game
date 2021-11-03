@@ -23,10 +23,6 @@ export default class Material extends BaseSprite {
     this.material.visible = false
   }
 
-  public renew(): void {
-    return
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
     return

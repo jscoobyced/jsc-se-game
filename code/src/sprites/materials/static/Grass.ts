@@ -7,7 +7,6 @@ export default class Grass extends Material {
 
   public create(): void {
     super.create()
-
     for (let i = 0; i < this.grassCount; i++) {
       const randomX = Phaser.Math.Between(0, this.gameWidth())
       const randomY = Phaser.Math.Between(0, this.gameHeight())
@@ -25,10 +24,15 @@ export default class Grass extends Material {
     }
   }
 
-  public renew(): void {
+  public hide(): void {
     for (const grass of this.container) {
-      grass.x = Phaser.Math.Between(0, this.gameWidth())
-      grass.y = Phaser.Math.Between(0, this.gameHeight())
+      grass.visible = false
+    }
+  }
+
+  public show(): void {
+    for (const grass of this.container) {
+      grass.visible = true
     }
   }
 }
