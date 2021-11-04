@@ -3,7 +3,7 @@ export type Frames = {
   frameHeight: number
   start?: number
   end?: number
-  framerate?: number
+  frameRate?: number
   repeat?: number
 }
 export type AssetDefinition = {

@@ -1,5 +1,6 @@
 import BaseSprite from '../../BaseSprite'
 import general from '../../../config/general.json'
+import Controller from '../../Controller'
 
 export default class Hero extends BaseSprite {
   private walkRightAnimation!: false | Phaser.Animations.Animation
@@ -8,10 +9,16 @@ export default class Hero extends BaseSprite {
   private defaultHeight = 85
   private player!: Phaser.Types.Physics.Arcade.SpriteWithStaticBody
   private currentAnimation!: false | Phaser.Animations.Animation
+  private velocity = 1 / 6
   private pointerRight = false
   private pointerLeft = false
   private pointerUp = false
   private pointerDown = false
+  private controller!: Controller
+
+  public setController = (controller: Controller): void => {
+    this.controller = controller
+  }
 
   preload(): void {
     super.preload()
@@ -39,7 +46,7 @@ export default class Hero extends BaseSprite {
     const walkRightConfig = {
       key: 'walk-right',
       frames: walkRightFrameNumbers,
-      frameRate: 6,
+      frameRate: this.config.frames?.frameRate,
       repeat: -1,
     }
     const walkLeftFrameNumbers = this.scene.anims.generateFrameNames(this.config.key, {
@@ -53,7 +60,7 @@ export default class Hero extends BaseSprite {
     const walkLeftConfig = {
       key: 'walk-left',
       frames: walkLeftFrameNumbers,
-      frameRate: 6,
+      frameRate: this.config.frames?.frameRate,
       repeat: -1,
     }
 
@@ -68,27 +75,27 @@ export default class Hero extends BaseSprite {
     let moveY = 0
     if (cursors.right.isDown || this.pointerRight) {
       this.updateAnimation(this.walkRightAnimation)
-      moveX = delta / 8
+      moveX = delta * this.velocity
       if (this.player.x > this.gameWidth()) {
         this.player.x = 0
         this.mapManager.east()
       }
     } else if (cursors.left.isDown || this.pointerLeft) {
       this.updateAnimation(this.walkLeftAnimation)
-      moveX = -delta / 8
+      moveX = -delta * this.velocity
       if (this.player.x < 0) {
         this.player.x = this.gameWidth()
         this.mapManager.west()
       }
     }
     if (cursors.down.isDown || this.pointerDown) {
-      moveY = delta / 8
+      moveY = delta * this.velocity
       if (this.player.y > this.gameHeight()) {
         this.player.y = 0
         this.mapManager.south()
       }
     } else if (cursors.up.isDown || this.pointerUp) {
-      moveY = -delta / 8
+      moveY = -delta * this.velocity
       if (this.player.y < 0) {
         this.player.y = this.gameHeight()
         this.mapManager.north()
@@ -109,25 +116,10 @@ export default class Hero extends BaseSprite {
   }
 
   private updatePointerPosition = (): void => {
-    this.pointerRight = false
-    this.pointerLeft = false
-    this.pointerUp = false
-    this.pointerDown = false
-    if (!this.scene.input.activePointer.isDown) return
-    const x = this.scene.input.activePointer.x
-    const y = this.scene.input.activePointer.y
-    if (x > (3 * this.gameWidth()) / 4) {
-      this.pointerRight = true
-    }
-    if (x < this.gameWidth() / 4) {
-      this.pointerLeft = true
-    }
-    if (y > (3 * this.gameHeight()) / 4) {
-      this.pointerDown = true
-    }
-    if (y < this.gameHeight() / 4) {
-      this.pointerUp = true
-    }
+    this.pointerRight = this.controller && this.controller.isMoveEast()
+    this.pointerLeft = this.controller && this.controller.isMoveWest()
+    this.pointerUp = this.controller && this.controller.isMoveNorth()
+    this.pointerDown = this.controller && this.controller.isMoveSouth()
   }
 
   private updateAnimation = (newAnimation: false | Phaser.Animations.Animation) => {

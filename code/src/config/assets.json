@@ -12,7 +12,8 @@
     "width": 680,
     "frames": {
       "frameWidth": 85,
-      "frameHeight": 85
+      "frameHeight": 85,
+      "frameRate": 6
     },
     "path": "assets/images/mumu.json"
   },

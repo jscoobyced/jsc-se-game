@@ -3,6 +3,7 @@ import assets from '../config/assets.json'
 import MapManager from '../maps/MapManager'
 import { GameConfig } from '../models/common'
 import Hero from '../sprites/characters/players/Hero'
+import Controller from '../sprites/Controller'
 import Material from '../sprites/materials/Material'
 import LightSwitch from '../sprites/materials/static/LightSwitch'
 
@@ -51,6 +52,10 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M).on('up', () => {
       this.gameConfig.showCommands = !this.gameConfig.showCommands
     })
+
+    const controller = new Controller(this)
+    controller.create()
+    this.player.setController(controller)
   }
 
   update = (time: number, delta: number): void => {
