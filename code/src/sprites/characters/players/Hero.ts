@@ -1,11 +1,14 @@
-import BaseSprite from '../../BaseSprite'
+import { Physics } from 'phaser'
 import general from '../../../config/general.json'
+import { AssetDefinition } from '../../../models/common'
 import Controller from '../../Controller'
 
-export default class Hero extends BaseSprite {
+export default class Hero {
+  private scene: Phaser.Scene
+  private config: AssetDefinition
   private walkRightAnimation!: false | Phaser.Animations.Animation
   private walkLeftAnimation!: false | Phaser.Animations.Animation
-  private player!: Phaser.Types.Physics.Arcade.SpriteWithStaticBody
+  private player!: Phaser.GameObjects.Sprite
   private currentAnimation!: false | Phaser.Animations.Animation
   private velocity = 1 / 6
   private pointerRight = false
@@ -14,20 +17,23 @@ export default class Hero extends BaseSprite {
   private pointerDown = false
   private controller!: Controller
 
+  public constructor(scene: Phaser.Scene, config: AssetDefinition) {
+    this.scene = scene
+    this.config = config
+  }
+
   public setController = (controller: Controller): void => {
     this.controller = controller
   }
 
   preload(): void {
-    super.preload()
     this.scene.load.multiatlas(this.config.key, this.config.path, general.baseUrls.images)
   }
 
   create(): void {
     this.player = this.scene.physics.add
-      .staticSprite(this.gameWidth() / 2, this.gameHeight() / 2, this.config.key, '01.png')
+      .sprite(this.scene.game.canvas.width / 2, this.scene.game.canvas.height / 2, this.config.key, '01.png')
       .setBounce(0)
-
     const walkRightFrameNumbers = this.scene.anims.generateFrameNames(this.config.key, {
       start: 5,
       end: 8,
@@ -59,43 +65,26 @@ export default class Hero extends BaseSprite {
 
     this.walkRightAnimation = this.scene.anims.create(walkRightConfig)
     this.walkLeftAnimation = this.scene.anims.create(walkLeftConfig)
+    const body = this.player.body as Physics.Arcade.Body
+    body.setCollideWorldBounds(true)
+    this.scene.cameras.main.startFollow(this.player)
   }
 
   public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
-    super.update(cursors, time, delta)
     this.updatePointerPosition()
     let moveX = 0
     let moveY = 0
     if (cursors.right.isDown || this.pointerRight) {
       this.updateAnimation(this.walkRightAnimation)
       moveX = delta * this.velocity
-      if (this.player.x > this.gameWidth()) {
-        this.player.x = 0
-        this.mapManager?.east()
-      }
     } else if (cursors.left.isDown || this.pointerLeft) {
       this.updateAnimation(this.walkLeftAnimation)
       moveX = -delta * this.velocity
-      if (this.player.x < 0) {
-        this.player.x = this.gameWidth()
-        this.mapManager?.west()
-      }
     }
     if (cursors.down.isDown || this.pointerDown) {
       moveY = delta * this.velocity
-      if (this.player.y > this.gameHeight()) {
-        this.player.y = 0
-        this.mapManager?.south()
-      }
     } else if (cursors.up.isDown || this.pointerUp) {
       moveY = -delta * this.velocity
-      if (this.player.y < 0) {
-        this.player.y = this.gameHeight()
-        this.mapManager?.north()
-      }
-    }
-    if (this.gameConfig().showCommands && (moveX != 0 || moveY != 0)) {
-      this.gameConfig().showCommands = false
     }
 
     if (moveX != 0 && moveY != 0) {

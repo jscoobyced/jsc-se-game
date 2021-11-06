@@ -1,17 +1,22 @@
 import { AssetDefinition } from '../../models/common'
-import BaseSprite from '../BaseSprite'
 import general from '../../config/general.json'
 
-export default class Material extends BaseSprite {
+export default class Material {
+  protected scene: Phaser.Scene
+  protected config: AssetDefinition
   protected material!: Phaser.GameObjects.Sprite
 
   public constructor(scene: Phaser.Scene, config: AssetDefinition) {
-    super(scene, config)
+    this.scene = scene
+    this.config = config
   }
 
   public preload(): void {
     this.scene.load.multiatlas(this.config.key, this.config.path, general.baseUrls.images)
-    super.preload()
+  }
+
+  public create(): void {
+    return
   }
 
   public show(): void {

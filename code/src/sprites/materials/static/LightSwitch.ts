@@ -5,9 +5,12 @@ export default class LightSwitch extends Material {
   private frameNames!: Phaser.Types.Animations.AnimationFrame[]
 
   public create(): void {
-    super.create()
-
-    this.material = this.scene.physics.add.staticSprite(this.gameWidth() - 50, 50, this.config.key, '01.png')
+    this.material = this.scene.physics.add.staticSprite(
+      this.scene.game.canvas.width - 50,
+      50,
+      this.config.key,
+      '01.png',
+    )
     this.frameNames = this.scene.anims.generateFrameNames(this.config.key, {
       start: 1,
       end: 2,
