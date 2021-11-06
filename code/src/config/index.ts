@@ -4,7 +4,7 @@ import general from './general.json'
 export default {
   type: Phaser.AUTO,
   parent: 'game',
-  backgroundColor: '#00E436',
+  backgroundColor: '#29adff',
   scale: {
     width: general.width,
     height: general.height,

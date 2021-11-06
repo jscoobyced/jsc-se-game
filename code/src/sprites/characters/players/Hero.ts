@@ -5,8 +5,6 @@ import Controller from '../../Controller'
 export default class Hero extends BaseSprite {
   private walkRightAnimation!: false | Phaser.Animations.Animation
   private walkLeftAnimation!: false | Phaser.Animations.Animation
-  private defaultWidth = 85
-  private defaultHeight = 85
   private player!: Phaser.Types.Physics.Arcade.SpriteWithStaticBody
   private currentAnimation!: false | Phaser.Animations.Animation
   private velocity = 1 / 6
@@ -27,12 +25,7 @@ export default class Hero extends BaseSprite {
 
   create(): void {
     this.player = this.scene.physics.add
-      .staticSprite(
-        this.gameWidth() / 2 - (this.config.frames?.frameWidth || this.defaultWidth) / 2,
-        this.gameHeight() / 2 - (this.config.frames?.frameHeight || this.defaultHeight) / 2,
-        this.config.key,
-        '01.png',
-      )
+      .staticSprite(this.gameWidth() / 2, this.gameHeight() / 2, this.config.key, '01.png')
       .setBounce(0)
 
     const walkRightFrameNumbers = this.scene.anims.generateFrameNames(this.config.key, {
@@ -78,27 +71,27 @@ export default class Hero extends BaseSprite {
       moveX = delta * this.velocity
       if (this.player.x > this.gameWidth()) {
         this.player.x = 0
-        this.mapManager.east()
+        this.mapManager?.east()
       }
     } else if (cursors.left.isDown || this.pointerLeft) {
       this.updateAnimation(this.walkLeftAnimation)
       moveX = -delta * this.velocity
       if (this.player.x < 0) {
         this.player.x = this.gameWidth()
-        this.mapManager.west()
+        this.mapManager?.west()
       }
     }
     if (cursors.down.isDown || this.pointerDown) {
       moveY = delta * this.velocity
       if (this.player.y > this.gameHeight()) {
         this.player.y = 0
-        this.mapManager.south()
+        this.mapManager?.south()
       }
     } else if (cursors.up.isDown || this.pointerUp) {
       moveY = -delta * this.velocity
       if (this.player.y < 0) {
         this.player.y = this.gameHeight()
-        this.mapManager.north()
+        this.mapManager?.north()
       }
     }
     if (this.gameConfig().showCommands && (moveX != 0 || moveY != 0)) {

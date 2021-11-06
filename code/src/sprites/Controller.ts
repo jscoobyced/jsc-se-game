@@ -1,8 +1,8 @@
 export default class Controller {
   private scene: Phaser.Scene
   private controller!: Phaser.GameObjects.Arc
-  private radiusBoundary = 70
-  private radiusController = 20
+  private radiusBoundary = 80
+  private radiusController = 30
   private fromEdge = 5
   private color = 0xffffff
   private isMoving = false

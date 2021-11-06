@@ -1,6 +1,6 @@
 {
-  "width": 800,
-  "height": 600,
+  "width": 768,
+  "height": 768,
   "baseUrls": {
     "images": "assets/images"
   }

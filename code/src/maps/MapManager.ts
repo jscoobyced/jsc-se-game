@@ -1,7 +1,6 @@
 import { Scene } from 'phaser'
-import { AssetDefinition } from '../models/common'
 import Material from '../sprites/materials/Material'
-import Map01 from './Map01'
+import Maps from './Maps'
 
 export default class MapManager {
   private currentMapX = 1
@@ -10,11 +9,17 @@ export default class MapManager {
   private mapWidth = 3
   private maps: Material[] = []
 
-  public createWorld(scene: Scene): void {
+  public preloadWorld(scene: Scene): void {
     for (let index = 0; index < this.mapHeight * this.mapWidth; index++) {
-      const map01 = new Map01(scene, undefined as unknown as AssetDefinition)
+      const map01 = new Maps(scene, index + 1)
       map01.preload()
       this.maps.push(map01)
+    }
+  }
+
+  public createWorld = (): void => {
+    for (const map of this.maps) {
+      map.create()
     }
   }
 
@@ -26,7 +31,6 @@ export default class MapManager {
     if (previousMap != undefined && previousMap >= 0) {
       this.maps[previousMap].hide()
     }
-    this.maps[this.mapId()].create()
     this.maps[this.mapId()].show()
   }
 

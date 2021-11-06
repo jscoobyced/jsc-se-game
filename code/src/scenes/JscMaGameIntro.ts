@@ -23,7 +23,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.load.image(assets.logo.key, assets.logo.value)
     this.switch.preload()
     this.gameConfig = this.game.config as GameConfig
-    this.mapManager.createWorld(this)
+    this.mapManager.preloadWorld(this)
     this.currentMap = this.mapManager.mapId()
     this.player = new Hero(this, assets.mumu, this.mapManager)
     this.player.preload()
@@ -31,7 +31,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
 
   create = (): void => {
     this.theme = this.game.sound.add(assets.theme.key, { volume: 0.5, loop: true })
-
+    this.mapManager.createWorld()
     this.mapManager.displayCurrentMap()
     this.switch.create()
     this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 2, assets.logo.key)

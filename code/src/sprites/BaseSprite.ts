@@ -4,9 +4,9 @@ import { AssetDefinition, GameConfig } from '../models/common'
 export default class BaseSprite {
   protected scene: Phaser.Scene
   protected config: AssetDefinition
-  protected mapManager: MapManager
+  protected mapManager?: MapManager
 
-  public constructor(scene: Phaser.Scene, config: AssetDefinition, mapManager: MapManager) {
+  public constructor(scene: Phaser.Scene, config: AssetDefinition, mapManager?: MapManager) {
     this.scene = scene
     this.config = config
     this.mapManager = mapManager

@@ -28,8 +28,15 @@
     "key": "grass",
     "value": "assets/images/grass.png",
     "height": 8,
-    "width": 28,
+    "width": 42,
     "path": "assets/images/grass.json"
+  },
+  "map01": {
+    "key": "map01",
+    "value": "assets/images/map01.png",
+    "height": 384,
+    "width": 384,
+    "path": "assets/images/map01.json"
   },
   "theme": {
     "key": "theme",

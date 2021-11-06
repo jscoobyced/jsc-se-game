@@ -1,13 +1,12 @@
 import { AssetDefinition } from '../../models/common'
 import BaseSprite from '../BaseSprite'
 import general from '../../config/general.json'
-import MapManager from '../../maps/MapManager'
 
 export default class Material extends BaseSprite {
   protected material!: Phaser.GameObjects.Sprite
 
   public constructor(scene: Phaser.Scene, config: AssetDefinition) {
-    super(scene, config, new MapManager())
+    super(scene, config)
   }
 
   public preload(): void {
