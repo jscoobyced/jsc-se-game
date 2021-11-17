@@ -8,9 +8,9 @@ export default class Hero {
   private config: AssetDefinition
   private walkRightAnimation!: false | Phaser.Animations.Animation
   private walkLeftAnimation!: false | Phaser.Animations.Animation
-  private player!: Phaser.GameObjects.Sprite
+  private player!: Phaser.Physics.Arcade.Sprite
   private currentAnimation!: false | Phaser.Animations.Animation
-  private velocity = 1 / 6
+  private velocity = 10
   private pointerRight = false
   private pointerLeft = false
   private pointerUp = false
@@ -93,8 +93,7 @@ export default class Hero {
       moveY = moveY / Math.SQRT2
     }
 
-    this.player.x += moveX
-    this.player.y += moveY
+    this.player.setVelocity(moveX, moveY)
   }
 
   public getBody = (): Phaser.GameObjects.GameObject => {

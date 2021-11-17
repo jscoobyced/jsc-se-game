@@ -20,13 +20,19 @@ export default class Maps {
     this.groundLayer = this.map.createLayer('Main', this.tileset)
     this.wallsLayer = this.map.createLayer('Edge', this.tileset)
     this.wallsLayer.setCollisionByProperty({ collides: true })
-    /*
+
     this.scene.physics.world.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height)
+    /*
     const debugGraphics = this.scene.add.graphics().setAlpha(0.7)
     this.wallsLayer.renderDebug(debugGraphics, {
       tileColor: null,
       collidingTileColor: new Phaser.Display.Color(234, 234, 48, 255),
       faceColor: new Phaser.Display.Color(40, 39, 37, 255),
+    })
+    this.groundLayer.renderDebug(debugGraphics, {
+      tileColor: null,
+      collidingTileColor: new Phaser.Display.Color(128, 234, 48, 255),
+      faceColor: new Phaser.Display.Color(128, 39, 37, 255),
     })
     */
   }
