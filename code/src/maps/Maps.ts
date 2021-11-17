@@ -1,6 +1,3 @@
-import Grass from '../sprites/materials/static/Grass'
-import assets from '../config/assets.json'
-
 export default class Maps {
   private scene: Phaser.Scene
   private map!: Phaser.Tilemaps.Tilemap
@@ -13,18 +10,28 @@ export default class Maps {
   }
 
   public preload(): void {
-    this.scene.load.image('tiles', 'assets/images/tilesets.png')
-    this.scene.load.tilemapTiledJSON('map01', 'assets/images/map-01.json')
+    this.scene.load.image('tiles', 'assets/images/tiles.png')
+    this.scene.load.tilemapTiledJSON('map02', 'assets/images/map-02.json')
   }
 
   public create(): void {
-    this.map = this.scene.make.tilemap({ key: 'map01' })
-    this.tileset = this.map.addTilesetImage('map', 'tiles')
-    this.groundLayer = this.map.createLayer('Ground', this.tileset)
+    this.map = this.scene.make.tilemap({ key: 'map02' })
+    this.tileset = this.map.addTilesetImage('Ground', 'tiles')
+    this.groundLayer = this.map.createLayer('Main', this.tileset)
+    this.wallsLayer = this.map.createLayer('Edge', this.tileset)
+    this.wallsLayer.setCollisionByProperty({ collides: true })
+    /*
     this.scene.physics.world.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height)
+    const debugGraphics = this.scene.add.graphics().setAlpha(0.7)
+    this.wallsLayer.renderDebug(debugGraphics, {
+      tileColor: null,
+      collidingTileColor: new Phaser.Display.Color(234, 234, 48, 255),
+      faceColor: new Phaser.Display.Color(40, 39, 37, 255),
+    })
+    */
   }
 
   public addCollider = (player: Phaser.GameObjects.GameObject): void => {
-    //this.scene.physics.add.collider(player, this.wallsLayer)
+    this.scene.physics.add.collider(player, this.wallsLayer)
   }
 }

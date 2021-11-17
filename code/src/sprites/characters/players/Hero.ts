@@ -67,6 +67,7 @@ export default class Hero {
     this.walkLeftAnimation = this.scene.anims.create(walkLeftConfig)
     const body = this.player.body as Physics.Arcade.Body
     body.setCollideWorldBounds(true)
+    this.scene.physics.world.enableBody(this.player, Phaser.Physics.Arcade.DYNAMIC_BODY)
     this.scene.cameras.main.startFollow(this.player)
   }
 
@@ -94,7 +95,10 @@ export default class Hero {
 
     this.player.x += moveX
     this.player.y += moveY
-    return
+  }
+
+  public getBody = (): Phaser.GameObjects.GameObject => {
+    return this.player
   }
 
   private updatePointerPosition = (): void => {

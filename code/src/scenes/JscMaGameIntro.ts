@@ -28,22 +28,23 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.map.create()
     this.theme = this.game.sound.add(assets.theme.key, { volume: 0.5, loop: true })
     this.switch.create()
-    this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 2, assets.logo.key)
-
-    this.tweens.add({
-      targets: this.logo,
-      y: 100,
-      duration: 1000,
-      ease: 'Sine.inOut',
-      yoyo: true,
-      repeat: -1,
-    })
     this.player.create()
     this.cursors = this.input.keyboard.createCursorKeys()
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height)
     this.controller = new Controller(this)
     this.controller.create()
     this.player.setController(this.controller)
+    this.map.addCollider(this.player.getBody())
+    this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 4, assets.logo.key).setScale(0.33, 0.33)
+
+    this.tweens.add({
+      targets: this.logo,
+      y: 50,
+      duration: 1000,
+      ease: 'Sine.inOut',
+      yoyo: true,
+      repeat: -1,
+    })
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

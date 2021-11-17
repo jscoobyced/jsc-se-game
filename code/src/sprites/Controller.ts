@@ -4,8 +4,8 @@ export default class Controller {
   private rightController!: Phaser.GameObjects.Arc
   private downController!: Phaser.GameObjects.Arc
   private upController!: Phaser.GameObjects.Arc
-  private radiusController = 30
-  private fromEdge = 5
+  private radiusController = 15
+  private fromEdge = 2
   private color = 0xffffff
   private left = false
   private right = false

@@ -8,12 +8,12 @@
   "mumu": {
     "key": "mumu",
     "value": "assets/images/mumu.png",
-    "height": 85,
-    "width": 680,
+    "height": 16,
+    "width": 128,
     "frames": {
-      "frameWidth": 85,
-      "frameHeight": 85,
-      "frameRate": 6
+      "frameWidth": 16,
+      "frameHeight": 16,
+      "frameRate": 12
     },
     "path": "assets/images/mumu.json"
   },
