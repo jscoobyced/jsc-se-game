@@ -35,7 +35,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.controller.create()
     this.player.setController(this.controller)
     this.map.addCollider(this.player.getBody())
-    this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 4, assets.logo.key).setScale(0.33, 0.33)
+    this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 4, assets.logo.key).setScale(0.5, 0.5)
 
     this.tweens.add({
       targets: this.logo,
@@ -51,6 +51,7 @@ export default class JscSeGameIntro extends Phaser.Scene {
   update = (time: number, delta: number): void => {
     this.player.update(this.cursors, time, delta)
     this.controller.update()
+    this.switch.update(this.cursors, time, delta)
     if (
       this.input.activePointer.isDown ||
       this.cursors.down.isDown ||
@@ -59,7 +60,6 @@ export default class JscSeGameIntro extends Phaser.Scene {
       this.cursors.left.isDown
     ) {
       this.logo.visible = false
-      this.switch.hide()
     }
     if (!this.game.sound.locked && !this.isMusicPlaying) {
       this.isMusicPlaying = true

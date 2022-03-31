@@ -46,11 +46,17 @@ export default class Controller {
     this.leftController.on('pointerup', () => {
       this.left = false
     })
+    this.leftController.on('pointerout', () => {
+      this.left = false
+    })
     this.rightController.setInteractive()
     this.rightController.on('pointerdown', () => {
       this.right = true
     })
     this.rightController.on('pointerup', () => {
+      this.right = false
+    })
+    this.rightController.on('pointerout', () => {
       this.right = false
     })
     this.downController.setInteractive()
@@ -60,11 +66,17 @@ export default class Controller {
     this.downController.on('pointerup', () => {
       this.down = false
     })
+    this.downController.on('pointerout', () => {
+      this.down = false
+    })
     this.upController.setInteractive()
     this.upController.on('pointerdown', () => {
       this.up = true
     })
     this.upController.on('pointerup', () => {
+      this.up = false
+    })
+    this.upController.on('pointerout', () => {
       this.up = false
     })
   }

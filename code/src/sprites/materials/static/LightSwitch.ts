@@ -22,6 +22,12 @@ export default class LightSwitch extends Material {
     this.scene.sound.mute = !this.isOn
   }
 
+  public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
+    this.material.x = this.scene.game.canvas.width - 50 + this.scene.cameras.main.scrollX
+    this.material.y = 50 + this.scene.cameras.main.scrollY
+    super.update(cursors, time, delta)
+  }
+
   private toggleMusic = () => {
     this.isOn = !this.isOn
     this.scene.sound.mute = !this.isOn

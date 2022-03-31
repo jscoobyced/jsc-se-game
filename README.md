@@ -4,6 +4,8 @@
 
 These are the adventures of Mumu, a courageous adventurer. She is equiped with her wit and bravery to defeat the evil Blue Queen.
 
+You can play [here](https://jsc-mu-game.netlify.app/).
+
 ## How to play
 
 TBD
