@@ -4,7 +4,7 @@ export default class Controller {
   private rightController!: Phaser.GameObjects.Arc
   private downController!: Phaser.GameObjects.Arc
   private upController!: Phaser.GameObjects.Arc
-  private radiusController = 15
+  private radiusController = 20
   private fromEdge = 2
   private color = 0xffffff
   private left = false
@@ -40,6 +40,7 @@ export default class Controller {
     )
     this.upController = this.scene.add.circle(this.getUpX(), this.getUpY(), this.radiusController, this.color, 0.5)
     this.leftController.setInteractive()
+    this.leftController.setScrollFactor(0, 0)
     this.leftController.on('pointerdown', () => {
       this.left = true
     })
@@ -50,6 +51,7 @@ export default class Controller {
       this.left = false
     })
     this.rightController.setInteractive()
+    this.rightController.setScrollFactor(0, 0)
     this.rightController.on('pointerdown', () => {
       this.right = true
     })
@@ -60,6 +62,7 @@ export default class Controller {
       this.right = false
     })
     this.downController.setInteractive()
+    this.downController.setScrollFactor(0, 0)
     this.downController.on('pointerdown', () => {
       this.down = true
     })
@@ -70,6 +73,7 @@ export default class Controller {
       this.down = false
     })
     this.upController.setInteractive()
+    this.upController.setScrollFactor(0, 0)
     this.upController.on('pointerdown', () => {
       this.up = true
     })
@@ -95,17 +99,6 @@ export default class Controller {
 
   public isMoveWest = (): boolean => {
     return this.left
-  }
-
-  public update = (): void => {
-    this.leftController.x = this.getLeftX() + this.scene.cameras.main.scrollX
-    this.leftController.y = this.getLeftY() + this.scene.cameras.main.scrollY
-    this.rightController.x = this.getRightX() + this.scene.cameras.main.scrollX
-    this.rightController.y = this.getRightY() + this.scene.cameras.main.scrollY
-    this.downController.x = this.getDownX() + this.scene.cameras.main.scrollX
-    this.downController.y = this.getDownY() + this.scene.cameras.main.scrollY
-    this.upController.x = this.getUpX() + this.scene.cameras.main.scrollX
-    this.upController.y = this.getUpY() + this.scene.cameras.main.scrollY
   }
 
   private getLeftX = (): number => {

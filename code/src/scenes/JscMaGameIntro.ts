@@ -31,9 +31,11 @@ export default class JscSeGameIntro extends Phaser.Scene {
     this.player.create()
     this.cursors = this.input.keyboard.createCursorKeys()
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height)
-    this.controller = new Controller(this)
-    this.controller.create()
-    this.player.setController(this.controller)
+    if (this.game.device.os.android || this.game.device.os.iPad || this.game.device.os.iPhone) {
+      this.controller = new Controller(this)
+      this.controller.create()
+      this.player.setController(this.controller)
+    }
     this.map.addCollider(this.player.getBody())
     this.logo = this.add.image(this.game.canvas.width / 2, assets.logo.height / 4, assets.logo.key).setScale(0.5, 0.5)
 
@@ -50,8 +52,6 @@ export default class JscSeGameIntro extends Phaser.Scene {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update = (time: number, delta: number): void => {
     this.player.update(this.cursors, time, delta)
-    this.controller.update()
-    this.switch.update(this.cursors, time, delta)
     if (
       this.input.activePointer.isDown ||
       this.cursors.down.isDown ||

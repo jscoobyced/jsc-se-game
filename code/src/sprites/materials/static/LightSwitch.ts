@@ -8,6 +8,7 @@ export default class LightSwitch extends Material {
     this.material = this.scene.physics.add
       .staticSprite(this.scene.game.canvas.width - 50, 50, this.config.key, '01.png')
       .setScale(0.5, 0.5)
+    this.material.setScrollFactor(0, 0)
     this.frameNames = this.scene.anims.generateFrameNames(this.config.key, {
       start: 1,
       end: 2,
@@ -20,12 +21,6 @@ export default class LightSwitch extends Material {
       this.toggleMusic()
     })
     this.scene.sound.mute = !this.isOn
-  }
-
-  public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
-    this.material.x = this.scene.game.canvas.width - 50 + this.scene.cameras.main.scrollX
-    this.material.y = 50 + this.scene.cameras.main.scrollY
-    super.update(cursors, time, delta)
   }
 
   private toggleMusic = () => {

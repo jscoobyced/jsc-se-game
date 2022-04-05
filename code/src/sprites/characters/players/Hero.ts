@@ -73,27 +73,27 @@ export default class Hero {
 
   public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, time: number, delta: number): void {
     this.updatePointerPosition()
-    let moveX = 0
-    let moveY = 0
+    let velocityX = 0
+    let velocityY = 0
     if (cursors.right.isDown || this.pointerRight) {
       this.updateAnimation(this.walkRightAnimation)
-      moveX = delta * this.velocity
+      velocityX = delta * this.velocity
     } else if (cursors.left.isDown || this.pointerLeft) {
       this.updateAnimation(this.walkLeftAnimation)
-      moveX = -delta * this.velocity
+      velocityX = -delta * this.velocity
     }
     if (cursors.down.isDown || this.pointerDown) {
-      moveY = delta * this.velocity
+      velocityY = delta * this.velocity
     } else if (cursors.up.isDown || this.pointerUp) {
-      moveY = -delta * this.velocity
+      velocityY = -delta * this.velocity
     }
 
-    if (moveX != 0 && moveY != 0) {
-      moveX = moveX / Math.SQRT2
-      moveY = moveY / Math.SQRT2
+    if (velocityX != 0 && velocityY != 0) {
+      velocityX = velocityX / Math.SQRT2
+      velocityY = velocityY / Math.SQRT2
     }
 
-    this.player.setVelocity(moveX, moveY)
+    this.player.setVelocity(velocityX, velocityY)
   }
 
   public getBody = (): Phaser.GameObjects.GameObject => {
