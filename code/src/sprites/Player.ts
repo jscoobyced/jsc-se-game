@@ -1,26 +1,87 @@
 import Phaser from 'phaser'
 import general from '../config/general.json'
+import Controller from '../Controller'
 
 export default class Player {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   private PLAYER_VELOCITY = 200
   private playerDirection = 'idleright'
-  private scene: Phaser.Scene
+  private pointerRight = false
+  private pointerLeft = false
+  private pointerUp = false
+  private pointerDown = false
+  private controller!: Controller
 
-  public constructor(scene: Phaser.Scene) {
-    this.scene = scene
+  preload = (scene: Phaser.Scene): void => {
+    scene.load.atlas('player', `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.json}/mumu.json`)
   }
 
-  preload = (): void => {
-    this.scene.load.atlas('player', `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.images}/mumu.json`)
-  }
-
-  create = (): void => {
-    this.player = this.scene.physics.add.sprite(100, 100, 'player').setBounce(0).setScale(3, 3)
+  create = (scene: Phaser.Scene): void => {
+    this.player = scene.physics.add
+      .sprite(general.width / 2 - 32, general.height / 2 - 32, 'player')
+      .setBounce(0)
+      .setScale(3, 3)
     const body = this.player.body as Phaser.Physics.Arcade.Body
     body.setCollideWorldBounds(true)
-    this.scene.anims.create({
+    this.createFrameSets(scene)
+    this.player.play(this.playerDirection)
+    this.cursor = scene.input.keyboard.createCursorKeys()
+    if (scene.game.device.os.android || scene.game.device.os.iPad || scene.game.device.os.iPhone) {
+      this.controller = new Controller(scene)
+      this.controller.create()
+    }
+  }
+
+  update = (): void => {
+    let velocityX = 0
+    let velocityY = 0
+    this.updatePointerPosition()
+    if (
+      this.cursor.down.isUp &&
+      this.cursor.up.isUp &&
+      this.cursor.right.isUp &&
+      this.cursor.left.isUp &&
+      this.playerDirection != 'idleleft' &&
+      this.playerDirection != 'idleright'
+    ) {
+      if (this.playerDirection.indexOf('right') > 0) {
+        this.playerDirection = 'idleright'
+      } else {
+        this.playerDirection = 'idleleft'
+      }
+      this.player.play(this.playerDirection)
+    }
+    if (this.cursor.up.isDown || this.pointerUp) {
+      velocityY = -this.PLAYER_VELOCITY
+    } else if (this.cursor.down.isDown || this.pointerDown) {
+      velocityY = this.PLAYER_VELOCITY
+    }
+    if (this.cursor.left.isDown || this.pointerLeft) {
+      if (this.playerDirection != 'walkleft') {
+        this.playerDirection = 'walkleft'
+        this.player.play(this.playerDirection)
+      }
+      velocityX = -this.PLAYER_VELOCITY
+    } else if (this.cursor.right.isDown || this.pointerRight) {
+      if (this.playerDirection != 'walkright') {
+        this.playerDirection = 'walkright'
+        this.player.play(this.playerDirection)
+      }
+      velocityX = this.PLAYER_VELOCITY
+    }
+    if (velocityX != 0 && velocityY != 0) {
+      velocityX = velocityX / Math.SQRT2
+      velocityY = velocityY / Math.SQRT2
+    }
+
+    this.player.setVelocity(velocityX, velocityY)
+  }
+
+  public getPlayer = () => this.player
+
+  private createFrameSets = (scene: Phaser.Scene) => {
+    scene.anims.create({
       key: 'walkright',
       frames: [
         {
@@ -43,7 +104,7 @@ export default class Player {
       frameRate: 8,
       repeat: -1,
     })
-    this.scene.anims.create({
+    scene.anims.create({
       key: 'walkleft',
       frames: [
         {
@@ -66,7 +127,7 @@ export default class Player {
       frameRate: 8,
       repeat: -1,
     })
-    this.scene.anims.create({
+    scene.anims.create({
       key: 'idleleft',
       frames: [
         {
@@ -77,7 +138,7 @@ export default class Player {
       frameRate: 1,
       repeat: 1,
     })
-    this.scene.anims.create({
+    scene.anims.create({
       key: 'idleright',
       frames: [
         {
@@ -88,47 +149,12 @@ export default class Player {
       frameRate: 1,
       repeat: 1,
     })
-    this.player.play(this.playerDirection)
-    this.cursor = this.scene.input.keyboard.createCursorKeys()
   }
 
-  update = (): void => {
-    this.player.setVelocityY(0)
-    this.player.setVelocityX(0)
-    if (
-      this.cursor.down.isUp &&
-      this.cursor.up.isUp &&
-      this.cursor.right.isUp &&
-      this.cursor.left.isUp &&
-      this.playerDirection != 'idleleft' &&
-      this.playerDirection != 'idleright'
-    ) {
-      if (this.playerDirection.indexOf('right') > 0) {
-        this.playerDirection = 'idleright'
-      } else {
-        this.playerDirection = 'idleleft'
-      }
-      this.player.play(this.playerDirection)
-    }
-    if (this.cursor.up.isDown) {
-      this.player.setVelocityY(-this.PLAYER_VELOCITY)
-    } else if (this.cursor.down.isDown) {
-      this.player.setVelocityY(this.PLAYER_VELOCITY)
-    }
-    if (this.cursor.left.isDown) {
-      if (this.playerDirection != 'walkleft') {
-        this.playerDirection = 'walkleft'
-        this.player.play(this.playerDirection)
-      }
-      this.player.setVelocityX(-this.PLAYER_VELOCITY)
-    } else if (this.cursor.right.isDown) {
-      if (this.playerDirection != 'walkright') {
-        this.playerDirection = 'walkright'
-        this.player.play(this.playerDirection)
-      }
-      this.player.setVelocityX(this.PLAYER_VELOCITY)
-    }
+  private updatePointerPosition = (): void => {
+    this.pointerRight = this.controller && this.controller.isMoveEast()
+    this.pointerLeft = this.controller && this.controller.isMoveWest()
+    this.pointerUp = this.controller && this.controller.isMoveNorth()
+    this.pointerDown = this.controller && this.controller.isMoveSouth()
   }
-
-  public getPlayer = () => this.player
 }

@@ -1,35 +1,40 @@
-import Phaser from 'phaser'
 import general from '../config/general.json'
-import Player from '../sprites/Player'
+import JscDefaultScene from './JscDefaultScene'
 
-export default class JscSeGameIntro extends Phaser.Scene {
-  private player = new Player(this)
+export default class JscMaGameIntro extends JscDefaultScene {
+  private logo!: Phaser.GameObjects.Image
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+
+  public constructor() {
+    super(general.levels.intro.key, general.levels.intro)
+  }
 
   preload = (): void => {
-    this.load.image('tiles', `${general.baseUrls.images}/main-tile.png`)
-    this.load.tilemapTiledJSON('intro-map', `${general.baseUrls.json}/intro-map.json`)
-    this.player.preload()
+    this.defaultPreload()
+    this.load.image('logo', `${general.baseUrls.images}/mumu-adventures.png`)
   }
 
   create = (): void => {
-    const map = this.make.tilemap({ key: 'intro-map', tileWidth: 64, tileHeight: 64 })
-    const tileset = map.addTilesetImage('main', 'tiles')
-    map.createLayer('ground', tileset, 0, 0)
-    const treelayer = map.createLayer('trees', tileset, 0, 0)
-    treelayer.setCollisionBetween(171, 177)
-    treelayer.setCollisionBetween(190, 196)
-    treelayer.setCollisionBetween(209, 215)
-    const waterlayer = map.createLayer('water', tileset, 0, 0)
-    waterlayer.setCollisionBetween(10, 15)
-    waterlayer.setCollisionBetween(29, 34)
-    waterlayer.setCollisionBetween(48, 51)
-
-    this.player.create()
-    this.physics.add.collider(this.player.getPlayer(), treelayer)
-    this.physics.add.collider(this.player.getPlayer(), waterlayer)
+    this.createMap()
+    this.createLayers()
+    this.cursors = this.input.keyboard.createCursorKeys()
+    this.logo = this.add.image(this.game.canvas.width / 2, 256, 'logo')
+    this.tweens.add({
+      targets: this.logo,
+      y: this.game.canvas.height / 3,
+      duration: 1000,
+      ease: 'Sine.inOut',
+      yoyo: true,
+      repeat: -1,
+    })
+    this.input.on('pointerdown', () => {
+      this.scene.start(general.levels.levelOne.key)
+    })
   }
 
-  update = (): void => {
-    this.player.update()
+  update = () => {
+    if (this.cursors.down.isDown || this.cursors.up.isDown || this.cursors.right.isDown || this.cursors.left.isDown) {
+      this.scene.start(general.levels.levelOne.key)
+    }
   }
 }

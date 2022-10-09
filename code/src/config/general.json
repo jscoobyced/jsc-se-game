@@ -1,9 +1,51 @@
 {
   "width": 1920,
   "height": 1280,
+  "controller" : 256,
   "baseUrls": {
     "images": "assets/images",
     "audio": "assets/audio",
     "json": "assets/json"
+  },
+  "levels": {
+    "intro": {
+      "key": "intro",
+      "tile": "levelOne",
+      "main": "main",
+      "ground": "ground",
+      "layers": [
+        {
+          "key": "trees"
+        },
+        {
+          "key": "water"
+        }
+      ]
+    },
+    "levelOne": {
+      "key": "levelOne",
+      "tile": "levelOne",
+      "main": "main",
+      "ground": "ground",
+      "layers": [
+        {
+          "key": "trees",
+          "collisions": [
+            [46, 47],
+            [171, 177],
+            [190, 196],
+            [209, 215]
+          ]
+        },
+        {
+          "key": "water",
+          "collisions": [
+            [10, 15],
+            [29, 34],
+            [48, 51]
+          ]
+        }
+      ]
+    }
   }
 }

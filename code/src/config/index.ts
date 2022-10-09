@@ -4,10 +4,10 @@ import general from './general.json'
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: 'game',
-  backgroundColor: '#29adff',
+  backgroundColor: '#071078',
   scale: {
     width: general.width,
-    height: general.height,
+    height: general.height + general.controller,
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     zoom: 2,
