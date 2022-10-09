@@ -19,7 +19,7 @@ export default class Player {
 
   create = (scene: Phaser.Scene): void => {
     this.player = scene.physics.add
-      .sprite(general.width / 2 - 32, general.height / 2 - 32, 'player')
+      .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, 'player')
       .setBounce(0)
       .setScale(3, 3)
     const body = this.player.body as Phaser.Physics.Arcade.Body
