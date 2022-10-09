@@ -1,8 +1,9 @@
 {
-  "width": 512,
-  "height": 256,
+  "width": 1920,
+  "height": 1280,
   "baseUrls": {
     "images": "assets/images",
-    "audio": "assets/audio"
+    "audio": "assets/audio",
+    "json": "assets/json"
   }
 }
