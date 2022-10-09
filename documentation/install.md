@@ -14,3 +14,4 @@ I created this application in Visual Studio Code. I have installed the following
 - Prettier - Code Formatter: `esbenp.prettier-vscode`
 - ESLine: `dbaeumer.vscode-eslint`
 - EditorConfig for VS Code: `editorconfig.editorconfig`
+- Docker: `ms-azuretools.vscode-docker`

@@ -10,27 +10,6 @@
     },
     "license": "GPL-3.0-or-later",
     "devDependencies": {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     },
     "scripts": {
         "lint": "eslint '*/**/*.{js,ts,ts}' --quiet --fix",

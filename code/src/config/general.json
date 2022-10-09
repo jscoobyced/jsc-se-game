@@ -2,6 +2,7 @@
   "width": 512,
   "height": 256,
   "baseUrls": {
-    "images": "assets/images"
+    "images": "assets/images",
+    "audio": "assets/audio"
   }
 }
