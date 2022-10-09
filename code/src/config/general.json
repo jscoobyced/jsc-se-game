@@ -1,7 +1,7 @@
 {
   "width": 2560,
   "height": 1280,
-  "controller" : 256,
+  "controller" : 640,
   "baseUrls": {
     "images": "assets/images",
     "audio": "assets/audio",
