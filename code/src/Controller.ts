@@ -6,8 +6,8 @@ export default class Controller {
   private rightController!: Phaser.GameObjects.Arc
   private downController!: Phaser.GameObjects.Arc
   private upController!: Phaser.GameObjects.Arc
-  private radiusController = 50
-  private fromEdge = 10
+  private radiusController = 100
+  private fromEdge = 20
   private color = 0xffffff
   private left = false
   private right = false
@@ -24,23 +24,23 @@ export default class Controller {
       this.getLeftY(),
       this.radiusController,
       this.color,
-      1.0,
+      0.75,
     )
     this.rightController = this.scene.add.circle(
       this.getRightX(),
       this.getRightY(),
       this.radiusController,
       this.color,
-      1.0,
+      0.75,
     )
     this.downController = this.scene.add.circle(
       this.getDownX(),
       this.getDownY(),
       this.radiusController,
       this.color,
-      1.0,
+      0.75,
     )
-    this.upController = this.scene.add.circle(this.getUpX(), this.getUpY(), this.radiusController, this.color, 1.0)
+    this.upController = this.scene.add.circle(this.getUpX(), this.getUpY(), this.radiusController, this.color, 0.75)
     this.leftController.setInteractive()
     this.leftController.setScrollFactor(0, 0)
     this.leftController.on('pointerdown', () => {
@@ -124,7 +124,7 @@ export default class Controller {
   }
 
   private getDownY = (): number => {
-    return general.height + general.controller - this.fromEdge - this.radiusController
+    return general.height - this.fromEdge - this.radiusController
   }
 
   private getUpX = (): number => {
@@ -132,6 +132,6 @@ export default class Controller {
   }
 
   private getUpY = (): number => {
-    return general.height + general.controller - this.fromEdge - this.radiusController * 5
+    return general.height - this.fromEdge - this.radiusController * 5
   }
 }
