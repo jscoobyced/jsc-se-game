@@ -4,11 +4,15 @@
 
 These are the adventures of Mumu, a courageous adventurer. She is equiped with her wit and bravery to defeat the evil Blue Queen.
 
-You can play [here](https://jsc-mu-game.netlify.app/).
+You can play [here](https://mumu-adventures.rochefolle.net/).
 
-## How to play
+## Quick start
 
-TBD
+To run this project (using Vite):
+```
+cd code
+yarn dev
+```
 
 ## Documentation
  

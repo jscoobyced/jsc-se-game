@@ -1,5 +1,0 @@
-{
-  "coveragePathIgnorePatterns": [
-    "<rootDir>/src/index.ts"
-  ]
-}
