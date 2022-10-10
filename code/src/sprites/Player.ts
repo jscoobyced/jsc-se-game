@@ -5,7 +5,7 @@ import Controller from '../Controller'
 export default class Player {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
-  private PLAYER_VELOCITY = 200
+  private PLAYER_VELOCITY = 250
   private playerDirection = 'idle'
   private pointerRight = false
   private pointerLeft = false
