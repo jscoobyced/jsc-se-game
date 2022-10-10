@@ -6,7 +6,7 @@ export default class Player {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   private PLAYER_VELOCITY = 200
-  private playerDirection = 'idleright'
+  private playerDirection = 'idle'
   private pointerRight = false
   private pointerLeft = false
   private pointerUp = false
@@ -42,40 +42,43 @@ export default class Player {
       this.cursor.up.isUp &&
       this.cursor.right.isUp &&
       this.cursor.left.isUp &&
-      this.playerDirection != 'idleleft' &&
-      this.playerDirection != 'idleright'
+      this.playerDirection != 'idle'
     ) {
-      if (this.playerDirection.indexOf('right') > 0) {
-        this.playerDirection = 'idleright'
-      } else {
-        this.playerDirection = 'idleleft'
-      }
+      this.playerDirection = 'idle'
       this.player.play(this.playerDirection)
-    }
-    if (this.cursor.up.isDown || this.pointerUp) {
-      velocityY = -this.PLAYER_VELOCITY
-    } else if (this.cursor.down.isDown || this.pointerDown) {
-      velocityY = this.PLAYER_VELOCITY
-    }
-    if (this.cursor.left.isDown || this.pointerLeft) {
-      if (this.playerDirection != 'walkleft') {
-        this.playerDirection = 'walkleft'
-        this.player.play(this.playerDirection)
+    } else {
+      if (this.cursor.up.isDown || this.pointerUp) {
+        velocityY = -this.PLAYER_VELOCITY
+        if (this.playerDirection != 'walkup') {
+          this.playerDirection = 'walkup'
+          this.player.play(this.playerDirection)
+        }
+      } else if (this.cursor.down.isDown || this.pointerDown) {
+        velocityY = this.PLAYER_VELOCITY
+        if (this.playerDirection != 'walkdown') {
+          this.playerDirection = 'walkdown'
+          this.player.play(this.playerDirection)
+        }
+      } else if (this.cursor.left.isDown || this.pointerLeft) {
+        if (this.playerDirection != 'walkleft') {
+          this.playerDirection = 'walkleft'
+          this.player.play(this.playerDirection)
+        }
+        velocityX = -this.PLAYER_VELOCITY
+      } else if (this.cursor.right.isDown || this.pointerRight) {
+        if (this.playerDirection != 'walkright') {
+          this.playerDirection = 'walkright'
+          this.player.play(this.playerDirection)
+        }
+        velocityX = this.PLAYER_VELOCITY
       }
-      velocityX = -this.PLAYER_VELOCITY
-    } else if (this.cursor.right.isDown || this.pointerRight) {
-      if (this.playerDirection != 'walkright') {
-        this.playerDirection = 'walkright'
-        this.player.play(this.playerDirection)
+      if (velocityX != 0 && velocityY != 0) {
+        velocityX = velocityX / Math.SQRT2
+        velocityY = velocityY / Math.SQRT2
       }
-      velocityX = this.PLAYER_VELOCITY
-    }
-    if (velocityX != 0 && velocityY != 0) {
-      velocityX = velocityX / Math.SQRT2
-      velocityY = velocityY / Math.SQRT2
-    }
 
-    this.player.setVelocity(velocityX, velocityY)
+      this.player.setVelocity(velocityX, velocityY)
+    }
   }
 
   public getPlayer = () => this.player
@@ -86,19 +89,15 @@ export default class Player {
       frames: [
         {
           key: 'player',
-          frame: '05.png',
+          frame: 'right-01',
         },
         {
           key: 'player',
-          frame: '06.png',
+          frame: 'right-02',
         },
         {
           key: 'player',
-          frame: '07.png',
-        },
-        {
-          key: 'player',
-          frame: '08.png',
+          frame: 'right-03',
         },
       ],
       frameRate: 8,
@@ -109,41 +108,64 @@ export default class Player {
       frames: [
         {
           key: 'player',
-          frame: '01.png',
+          frame: 'left-01',
         },
         {
           key: 'player',
-          frame: '02.png',
+          frame: 'left-02',
         },
         {
           key: 'player',
-          frame: '03.png',
-        },
-        {
-          key: 'player',
-          frame: '04.png',
+          frame: 'left-03',
         },
       ],
       frameRate: 8,
       repeat: -1,
     })
     scene.anims.create({
-      key: 'idleleft',
+      key: 'walkup',
       frames: [
         {
           key: 'player',
-          frame: '04.png',
+          frame: 'up-01',
+        },
+        {
+          key: 'player',
+          frame: 'up-02',
+        },
+        {
+          key: 'player',
+          frame: 'up-03',
         },
       ],
-      frameRate: 1,
-      repeat: 1,
+      frameRate: 8,
+      repeat: -1,
     })
     scene.anims.create({
-      key: 'idleright',
+      key: 'walkdown',
       frames: [
         {
           key: 'player',
-          frame: '05.png',
+          frame: 'down-01',
+        },
+        {
+          key: 'player',
+          frame: 'down-02',
+        },
+        {
+          key: 'player',
+          frame: 'down-03',
+        },
+      ],
+      frameRate: 8,
+      repeat: -1,
+    })
+    scene.anims.create({
+      key: 'idle',
+      frames: [
+        {
+          key: 'player',
+          frame: 'idle',
         },
       ],
       frameRate: 1,
