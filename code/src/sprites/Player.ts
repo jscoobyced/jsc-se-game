@@ -6,6 +6,7 @@ export default class Player {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   private PLAYER_VELOCITY = 250
+  private PLAYER_FRAMERATE = 6
   private playerDirection = 'idle'
   private pointerRight = false
   private pointerLeft = false
@@ -42,6 +43,10 @@ export default class Player {
       this.cursor.up.isUp &&
       this.cursor.right.isUp &&
       this.cursor.left.isUp &&
+      !this.pointerDown &&
+      !this.pointerLeft &&
+      !this.pointerRight &&
+      !this.pointerUp &&
       this.playerDirection != 'idle'
     ) {
       this.playerDirection = 'idle'
@@ -100,7 +105,7 @@ export default class Player {
           frame: 'right-03',
         },
       ],
-      frameRate: 6,
+      frameRate: this.PLAYER_FRAMERATE,
       repeat: -1,
     })
     scene.anims.create({
@@ -119,7 +124,7 @@ export default class Player {
           frame: 'left-03',
         },
       ],
-      frameRate: 6,
+      frameRate: this.PLAYER_FRAMERATE,
       repeat: -1,
     })
     scene.anims.create({
@@ -138,7 +143,7 @@ export default class Player {
           frame: 'up-03',
         },
       ],
-      frameRate: 6,
+      frameRate: this.PLAYER_FRAMERATE,
       repeat: -1,
     })
     scene.anims.create({
@@ -157,7 +162,7 @@ export default class Player {
           frame: 'down-03',
         },
       ],
-      frameRate: 6,
+      frameRate: this.PLAYER_FRAMERATE,
       repeat: -1,
     })
     scene.anims.create({
