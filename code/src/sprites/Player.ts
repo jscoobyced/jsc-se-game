@@ -100,7 +100,7 @@ export default class Player {
           frame: 'right-03',
         },
       ],
-      frameRate: 8,
+      frameRate: 6,
       repeat: -1,
     })
     scene.anims.create({
@@ -119,7 +119,7 @@ export default class Player {
           frame: 'left-03',
         },
       ],
-      frameRate: 8,
+      frameRate: 6,
       repeat: -1,
     })
     scene.anims.create({
@@ -138,7 +138,7 @@ export default class Player {
           frame: 'up-03',
         },
       ],
-      frameRate: 8,
+      frameRate: 6,
       repeat: -1,
     })
     scene.anims.create({
@@ -157,7 +157,7 @@ export default class Player {
           frame: 'down-03',
         },
       ],
-      frameRate: 8,
+      frameRate: 6,
       repeat: -1,
     })
     scene.anims.create({
