@@ -20,7 +20,7 @@ export default class JscMaGameLevelOne extends JscDefaultScene {
     this.createLayers(this.player.getPlayer())
   }
 
-  update = (): void => {
-    this.player.update()
+  update = (time: number): void => {
+    this.player.update(time)
   }
 }

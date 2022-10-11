@@ -5,7 +5,8 @@ import Controller from '../Controller'
 export default class Player {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
-  private PLAYER_VELOCITY = 250
+  private PLAYER_VELOCITY_WALK = 200
+  private PLAYER_VELOCITY_RUN_FACTOR = 2
   private PLAYER_FRAMERATE = 6
   private playerDirection = 'idle'
   private pointerRight = false
@@ -13,6 +14,7 @@ export default class Player {
   private pointerUp = false
   private pointerDown = false
   private controller!: Controller
+  private walkTime = 0
 
   preload = (scene: Phaser.Scene): void => {
     scene.load.atlas('player', `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.json}/mumu.json`)
@@ -34,59 +36,67 @@ export default class Player {
     }
   }
 
-  update = (): void => {
+  update = (time: number): void => {
     let velocityX = 0
     let velocityY = 0
     this.updatePointerPosition()
     if (
-      this.cursor.down.isUp &&
-      this.cursor.up.isUp &&
-      this.cursor.right.isUp &&
-      this.cursor.left.isUp &&
-      !this.pointerDown &&
-      !this.pointerLeft &&
-      !this.pointerRight &&
-      !this.pointerUp &&
-      this.playerDirection != 'idle'
+      this.cursor.down.isDown ||
+      this.cursor.up.isDown ||
+      this.cursor.right.isDown ||
+      this.cursor.left.isDown ||
+      this.pointerDown ||
+      this.pointerLeft ||
+      this.pointerRight ||
+      this.pointerUp
     ) {
-      this.playerDirection = 'idle'
-      this.player.play(this.playerDirection)
-    } else {
       if (this.cursor.up.isDown || this.pointerUp) {
-        velocityY = -this.PLAYER_VELOCITY
-        if (this.playerDirection != 'walkup') {
-          this.playerDirection = 'walkup'
-          this.player.play(this.playerDirection)
-        }
+        velocityY = -this.PLAYER_VELOCITY_WALK
       } else if (this.cursor.down.isDown || this.pointerDown) {
-        velocityY = this.PLAYER_VELOCITY
-        if (this.playerDirection != 'walkdown') {
-          this.playerDirection = 'walkdown'
-          this.player.play(this.playerDirection)
-        }
-      } else if (this.cursor.left.isDown || this.pointerLeft) {
-        if (this.playerDirection != 'walkleft') {
-          this.playerDirection = 'walkleft'
-          this.player.play(this.playerDirection)
-        }
-        velocityX = -this.PLAYER_VELOCITY
+        velocityY = this.PLAYER_VELOCITY_WALK
+      }
+      if (this.cursor.left.isDown || this.pointerLeft) {
+        velocityX = -this.PLAYER_VELOCITY_WALK
       } else if (this.cursor.right.isDown || this.pointerRight) {
-        if (this.playerDirection != 'walkright') {
-          this.playerDirection = 'walkright'
-          this.player.play(this.playerDirection)
-        }
-        velocityX = this.PLAYER_VELOCITY
+        velocityX = this.PLAYER_VELOCITY_WALK
       }
       if (velocityX != 0 && velocityY != 0) {
         velocityX = velocityX / Math.SQRT2
         velocityY = velocityY / Math.SQRT2
       }
-
-      this.player.setVelocity(velocityX, velocityY)
     }
+    this.changePlayerDirection(velocityX, velocityY, time)
   }
 
   public getPlayer = () => this.player
+
+  private changePlayerDirection = (velocityX: number, velocityY: number, time: number) => {
+    let direction = 'idle'
+    let isRunning = 1
+    if (velocityX === 0) {
+      if (velocityY > 0) {
+        direction = 'walkdown'
+      } else if (velocityY < 0) {
+        direction = 'walkup'
+      }
+    } else {
+      if (velocityX > 0) {
+        direction = 'walkright'
+      } else {
+        direction = 'walkleft'
+      }
+    }
+    if (this.playerDirection != direction) {
+      this.playerDirection = direction
+      this.player.play(this.playerDirection)
+      this.walkTime = time
+    } else {
+      if (time - this.walkTime > 1000) {
+        isRunning = this.PLAYER_VELOCITY_RUN_FACTOR
+      }
+    }
+    this.player.setVelocity(velocityX * isRunning, velocityY * isRunning)
+  }
 
   private createFrameSets = (scene: Phaser.Scene) => {
     scene.anims.create({
