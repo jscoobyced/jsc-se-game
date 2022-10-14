@@ -6,6 +6,7 @@ export default class Player {
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   private PLAYER_VELOCITY_WALK = 200
+  private PLAYER_WALK_TO_RUN_TIME_IN_MS = 500
   private PLAYER_VELOCITY_RUN_FACTOR = 2
   private PLAYER_FRAMERATE = 6
   private playerDirection = 'idle'
@@ -24,7 +25,7 @@ export default class Player {
     this.player = scene.physics.add
       .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, 'player')
       .setBounce(0)
-      .setScale(3, 3)
+      .setScale(2, 2)
     const body = this.player.body as Phaser.Physics.Arcade.Body
     body.setCollideWorldBounds(true)
     this.createFrameSets(scene)
@@ -91,7 +92,7 @@ export default class Player {
       this.player.play(this.playerDirection)
       this.walkTime = time
     } else {
-      if (time - this.walkTime > 1000) {
+      if (time - this.walkTime > this.PLAYER_WALK_TO_RUN_TIME_IN_MS) {
         isRunning = this.PLAYER_VELOCITY_RUN_FACTOR
       }
     }

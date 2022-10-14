@@ -29,6 +29,22 @@
       "ground": "ground",
       "layers": [
         {
+          "key": "house-bg",
+          "collisions": [
+            [97, 98]
+          ]
+        },
+        {
+          "key": "house-fg",
+          "collisions": [
+            [103, 104],
+            [117, 118],
+            [155, 156],
+            [200, 203],
+            [242, 243]
+          ]
+        },
+        {
           "key": "trees",
           "collisions": [
             [171, 177],
