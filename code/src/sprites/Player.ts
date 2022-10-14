@@ -21,7 +21,7 @@ export default class Player {
     scene.load.atlas('player', `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.json}/mumu.json`)
   }
 
-  create = (scene: Phaser.Scene): void => {
+  create = (scene: Phaser.Scene, cursor: Phaser.Types.Input.Keyboard.CursorKeys, controller: Controller): void => {
     this.player = scene.physics.add
       .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, 'player')
       .setBounce(0)
@@ -29,11 +29,8 @@ export default class Player {
     body.setCollideWorldBounds(true)
     this.createFrameSets(scene)
     this.player.play(this.playerDirection)
-    this.cursor = scene.input.keyboard.createCursorKeys()
-    if (scene.game.device.os.android || scene.game.device.os.iPad || scene.game.device.os.iPhone) {
-      this.controller = new Controller(scene)
-      this.controller.create()
-    }
+    this.cursor = cursor
+    this.controller = controller
   }
 
   update = (time: number): void => {
@@ -66,6 +63,10 @@ export default class Player {
       }
     }
     this.changePlayerDirection(velocityX, velocityY, time)
+  }
+
+  stop = () => {
+    this.player.setVelocity(0, 0)
   }
 
   public getPlayer = () => this.player

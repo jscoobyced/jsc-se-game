@@ -5,6 +5,7 @@ export default class Npc {
   private name!: string
   private sprite!: string
   private npc!: Phaser.Physics.Arcade.Sprite
+  private talkImage!: Phaser.Physics.Arcade.Image
   private NPC_FRAMERATE = 4
   private x = 0
   private y = 0
@@ -27,6 +28,8 @@ export default class Npc {
   create = (scene: Phaser.Scene): void => {
     this.npc = scene.physics.add.staticSprite(920, 450, this.name)
     this.createFrameSets(scene)
+    this.talkImage = scene.physics.add.image(50, 50, this.name, 'idle-01')
+    this.mute()
     this.npc.play(`idle-${this.name}`)
   }
 
@@ -48,5 +51,12 @@ export default class Npc {
       frameRate: this.NPC_FRAMERATE,
       repeat: -1,
     })
+  }
+
+  talk = () => {
+    this.talkImage.setVisible(true)
+  }
+  mute = () => {
+    this.talkImage.setVisible(false)
   }
 }
