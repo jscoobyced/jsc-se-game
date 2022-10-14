@@ -2,8 +2,8 @@
   "npcs": {
     "forest-guy": {
       "level-one": [
-        ["Hello there. My name", "is Jordan. What is your", "name my dear?"],
-        ["Sorry, Cedric didn't", "complete this level", "yet. Please come back", "later. Have a nice", "day!"]
+        ["Hello there. My", "name is Jordan.", "What is your", "name my dear?"],
+        ["Sorry, Cedric didn't", "complete this level", "yet. Please come", "back later. Have a", " nice day!"]
       ]
     }
   }

@@ -42,15 +42,21 @@ export default class JscMaGameLevelOne extends JscDefaultScene {
     if (!this.isTalking) {
       this.isTalking = true
       this.forestGuy.talk()
-      this.showText(this.nextText(), () => {
-        const text = this.nextText()
-        if (text && text.length > 0) {
-          this.showText(text)
-        } else {
-          this.hideText()
-          this.forestGuy.mute()
-        }
+      this.showNextText()
+    }
+  }
+
+  private showNextText = () => {
+    const text = this.nextText()
+    if (text && text.length > 0) {
+      this.showText(text, () => {
+        this.showNextText()
       })
+    } else {
+      this.hideText()
+      this.forestGuy.mute()
+      this.isTalking = false
+      this.forestGuySpeechIndex = 0
     }
   }
 

@@ -4,8 +4,10 @@ import general from '../config/general.json'
 export default class Banner {
   private BANNER_PAD = 5
   private TEXT_PAD = 50
+  private FONT_SIZE = 60
   private image!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
   private text!: Phaser.GameObjects.BitmapText
+  private onPointerUp!: () => void
 
   preload = (scene: Phaser.Scene): void => {
     scene.load.image('banner', `${general.baseUrls.images}/banner.png`)
@@ -21,29 +23,37 @@ export default class Banner {
       general['banner-x'] + this.image.originY + this.TEXT_PAD,
       'me-font',
       '',
-      50,
+      this.FONT_SIZE,
     )
+    this.image.setInteractive()
+    this.image.on('pointerup', () => {
+      this.executeCallback()
+    })
   }
 
   show = () => {
     this.image.setVisible(true)
-    this.image.setInteractive()
     this.text.setVisible(true)
   }
 
   hide = () => {
-    this.image.removeInteractive()
     this.image.setVisible(false)
     this.text.setVisible(false)
   }
 
   showText = (text: string | string[], callback?: () => void) => {
-    this.show()
+    if (!this.image.visible) {
+      this.show()
+    }
     this.text.setText(text)
     if (callback) {
-      this.image.on('pointerdown', () => {
-        callback()
-      })
+      this.onPointerUp = callback
+    }
+  }
+
+  private executeCallback = () => {
+    if (this.onPointerUp) {
+      this.onPointerUp()
     }
   }
 }

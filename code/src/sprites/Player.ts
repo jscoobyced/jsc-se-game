@@ -66,7 +66,7 @@ export default class Player {
   }
 
   stop = () => {
-    this.player.setVelocity(0, 0)
+    this.changePlayerDirection(0, 0, 0)
   }
 
   public getPlayer = () => this.player

@@ -2,7 +2,7 @@
   "width": 2560,
   "height": 1280,
   "controller": 640,
-  "banner-x": 64,
+  "banner-x": 32,
   "baseUrls": {
     "images": "assets/images",
     "audio": "assets/audio",
