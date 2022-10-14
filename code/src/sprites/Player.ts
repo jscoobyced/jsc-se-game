@@ -25,7 +25,6 @@ export default class Player {
     this.player = scene.physics.add
       .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, 'player')
       .setBounce(0)
-      .setScale(2, 2)
     const body = this.player.body as Phaser.Physics.Arcade.Body
     body.setCollideWorldBounds(true)
     this.createFrameSets(scene)
