@@ -8,7 +8,7 @@ export default class JscDefaultScene extends Phaser.Scene {
   protected level!: Level
   private map!: Phaser.Tilemaps.Tilemap
   private tileset!: Phaser.Tilemaps.Tileset
-  private banner = new Banner()
+  protected banner = new Banner()
   protected cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   protected controller!: Controller
 
@@ -59,10 +59,6 @@ export default class JscDefaultScene extends Phaser.Scene {
 
   protected showText = (text: string[], callback?: () => void) => {
     this.banner.showText(text, callback)
-  }
-
-  protected hideText = () => {
-    this.banner.hide()
   }
 
   private toggleFullScreen = (fsButton: Phaser.GameObjects.Image) => {

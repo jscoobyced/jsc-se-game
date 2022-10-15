@@ -6,5 +6,12 @@
         ["Sorry, Cedric didn't", "complete this level", "yet. Please come", "back later. Have a", " nice day!"]
       ]
     }
+  },
+  "player": {
+    "mumu": {
+      "level-one": [
+        ["Well, hello to you!", "My name is Mumu.", "Nice to meet you!"]
+      ]
+    }
   }
 }

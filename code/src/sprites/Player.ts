@@ -1,8 +1,10 @@
 import Phaser from 'phaser'
 import general from '../config/general.json'
 import Controller from '../Controller'
+import Speaker from './Speaker'
 
 export default class Player {
+  private name = 'player'
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   private PLAYER_VELOCITY_WALK = 200
@@ -16,14 +18,17 @@ export default class Player {
   private pointerDown = false
   private controller!: Controller
   private walkTime = 0
+  private speaker!: Speaker
 
   preload = (scene: Phaser.Scene): void => {
-    scene.load.atlas('player', `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.json}/mumu.json`)
+    scene.load.atlas(this.name, `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.json}/mumu.json`)
+    this.speaker = new Speaker(this.name, 'levelOne', 'player', 'mumu', 'level-one')
+    this.speaker.preload(scene)
   }
 
   create = (scene: Phaser.Scene, cursor: Phaser.Types.Input.Keyboard.CursorKeys, controller: Controller): void => {
     this.player = scene.physics.add
-      .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, 'player')
+      .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, this.name)
       .setBounce(0)
     const body = this.player.body as Phaser.Physics.Arcade.Body
     body.setCollideWorldBounds(true)
@@ -31,6 +36,7 @@ export default class Player {
     this.player.play(this.playerDirection)
     this.cursor = cursor
     this.controller = controller
+    this.speaker.create(scene)
   }
 
   update = (time: number): void => {
@@ -71,6 +77,8 @@ export default class Player {
 
   public getPlayer = () => this.player
 
+  public getSpeaker = () => this.speaker
+
   private changePlayerDirection = (velocityX: number, velocityY: number, time: number) => {
     let direction = 'idle'
     let isRunning = 1
@@ -104,15 +112,15 @@ export default class Player {
       key: 'walkright',
       frames: [
         {
-          key: 'player',
+          key: this.name,
           frame: 'right-01',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'right-02',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'right-03',
         },
       ],
@@ -123,15 +131,15 @@ export default class Player {
       key: 'walkleft',
       frames: [
         {
-          key: 'player',
+          key: this.name,
           frame: 'left-01',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'left-02',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'left-03',
         },
       ],
@@ -142,15 +150,15 @@ export default class Player {
       key: 'walkup',
       frames: [
         {
-          key: 'player',
+          key: this.name,
           frame: 'up-01',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'up-02',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'up-03',
         },
       ],
@@ -161,15 +169,15 @@ export default class Player {
       key: 'walkdown',
       frames: [
         {
-          key: 'player',
+          key: this.name,
           frame: 'down-01',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'down-02',
         },
         {
-          key: 'player',
+          key: this.name,
           frame: 'down-03',
         },
       ],
@@ -180,8 +188,8 @@ export default class Player {
       key: 'idle',
       frames: [
         {
-          key: 'player',
-          frame: 'idle',
+          key: this.name,
+          frame: 'idle-01',
         },
       ],
       frameRate: 1,

@@ -1,20 +1,17 @@
 import Phaser from 'phaser'
 import general from '../config/general.json'
+import Speaker from './Speaker'
 
 export default class Npc {
   private name!: string
   private sprite!: string
   private npc!: Phaser.Physics.Arcade.Sprite
-  private talkImage!: Phaser.Physics.Arcade.Image
   private NPC_FRAMERATE = 4
-  private x = 0
-  private y = 0
+  private speaker!: Speaker
 
-  public constructor(name: string, sprite: string, x: number, y: number) {
+  public constructor(name: string, sprite: string) {
     this.name = name
     this.sprite = sprite
-    this.x = x
-    this.y = y
   }
 
   preload = (scene: Phaser.Scene): void => {
@@ -23,17 +20,20 @@ export default class Npc {
       `${general.baseUrls.images}/${this.sprite}.png`,
       `${general.baseUrls.json}/${this.sprite}.json`,
     )
+    this.speaker = new Speaker(this.name, 'levelOne', 'npcs', 'forest-guy', 'level-one')
+    this.speaker.preload(scene)
   }
 
   create = (scene: Phaser.Scene): void => {
     this.npc = scene.physics.add.staticSprite(920, 450, this.name)
     this.createFrameSets(scene)
-    this.talkImage = scene.physics.add.image(50, 50, this.name, 'idle-01')
-    this.mute()
     this.npc.play(`idle-${this.name}`)
+    this.speaker.create(scene)
   }
 
   public getNpc = () => this.npc
+
+  public getSpeaker = () => this.speaker
 
   private createFrameSets = (scene: Phaser.Scene) => {
     scene.anims.create({
@@ -51,12 +51,5 @@ export default class Npc {
       frameRate: this.NPC_FRAMERATE,
       repeat: -1,
     })
-  }
-
-  talk = () => {
-    this.talkImage.setVisible(true)
-  }
-  mute = () => {
-    this.talkImage.setVisible(false)
   }
 }
