@@ -8,7 +8,7 @@ import JscDefaultScene from './JscDefaultScene'
 export default class JscMaGameLevelOne extends JscDefaultScene implements SpeakerController {
   private player = new Player()
   private forestGuy = new Npc('Jordan', 'forest-guy')
-  private nextSpeaker!: boolean | Speaker
+  private speakers: Speaker[] = []
 
   public constructor() {
     super(general.levels.levelOne.key, general.levels.levelOne)
@@ -36,14 +36,20 @@ export default class JscMaGameLevelOne extends JscDefaultScene implements Speake
     }
   }
 
-  public hasNextSpeaker = (): boolean | Speaker => {
-    const next = this.nextSpeaker
-    this.nextSpeaker = false
-    return next
+  public hasMoreSpeaker = (): boolean => {
+    return this.speakers.length > 0
+  }
+
+  public nextSpeaker(): Speaker | undefined {
+    return this.speakers.shift()
+  }
+
+  public addSpeaker(speaker: Speaker): void {
+    this.speakers.push(speaker)
   }
 
   private talkForestGuy = () => {
-    this.nextSpeaker = this.player.getSpeaker()
+    this.addSpeaker(this.player.getSpeaker())
     this.forestGuy.getSpeaker().startTalking(this.banner, this)
   }
 }

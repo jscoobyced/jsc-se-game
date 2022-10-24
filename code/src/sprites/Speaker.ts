@@ -63,10 +63,9 @@ export default class Speaker {
       this.mute()
       this.isCurrentlyTalking = false
       this.characterSpeechIndex = 0
-      const hasNextSpeaker = this.speakerController.hasNextSpeaker()
-      if (hasNextSpeaker) {
-        const nextSpeaker = hasNextSpeaker as Speaker
-        nextSpeaker.startTalking(banner, this.speakerController)
+      if (this.speakerController.hasMoreSpeaker()) {
+        const speaker = this.speakerController.nextSpeaker()
+        speaker?.startTalking(banner, this.speakerController)
       }
     }
   }
