@@ -1,13 +1,25 @@
 {
   "npcs": {
     "forest-guy": {
-      "level-one-intro-01": ["Hello there. My", "name is Jordan.", "What is your", "name my dear?"],
-      "level-one-intro-02": ["Sorry, Cédric didn't", "complete this level", "yet. Please come", "back later. Have a", " nice day!"]
+      "level-one-intro-01": [["Hello there. My", "name is Jordan.", "What is your", "name my dear?"]],
+      "level-one-intro-02": [
+        ["You are new here,", "aren't you? Don't", "worry, I'll tell you", "everything you need", "to know."],
+        ["First of all, we", "call this land the", "Kingdom of Jaidee.", "Everyone here is", "kind and helpful."],
+        ["Are you a kind", "and helpful", "person, Mumu?"]
+      ],
+      "level-one-intro-03": [
+        ["I'm happy to hear", "that, Mumu. Then", "let's start by", "bringin coffee to"],
+        ["your friends:", "Yana and Jo.", "You need to find", "the coffee shop", "first. The coffee"],
+        ["is always free in", "the Kingdom of", "Jaidee. Once you", "have 2 cups of", "coffee, bring it"],
+        ["to Yana and Jo in", "order to wake them", "up. Good luck!"]
+      ],
+      "level-one-intro-04": [["You need to bring", "coffee to your", "friends first."]]
     }
   },
   "player": {
     "mumu": {
-      "level-one-intro": ["Well, hello to you!", "My name is Mumu.", "Nice to meet you!"]
+      "level-one-intro-01": [["Well, hello to you!", "My name is Mumu.", "Nice to meet you!"]],
+      "level-one-intro-02": [["I am! I am!.", "What can I do", "to help?"]]
     }
   }
 }

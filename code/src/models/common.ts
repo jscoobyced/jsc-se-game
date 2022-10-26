@@ -8,3 +8,14 @@ export type Level = {
     collisions?: number[][]
   }[]
 }
+
+export type SaveFile = {
+  level: {
+    name: string
+    progress: number
+  }
+  position: {
+    x: number
+    y: number
+  }
+}

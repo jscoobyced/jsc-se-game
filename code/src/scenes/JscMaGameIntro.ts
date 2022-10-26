@@ -27,13 +27,13 @@ export default class JscMaGameIntro extends JscDefaultScene {
       repeat: -1,
     })
     this.input.on('pointerdown', () => {
-      this.scene.start(general.levels.levelOne.key)
+      this.scene.start(this.saveFile.level.name)
     })
   }
 
   update = () => {
     if (this.cursor.down.isDown || this.cursor.up.isDown || this.cursor.right.isDown || this.cursor.left.isDown) {
-      this.scene.start(general.levels.levelOne.key)
+      this.scene.start(this.saveFile.level.name)
     }
   }
 }

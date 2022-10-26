@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import general from '../config/general.json'
 import Controller from '../Controller'
-import { Level } from '../models/common'
+import { Level, SaveFile } from '../models/common'
 import Banner from '../sprites/Banner'
 
 export default class JscDefaultScene extends Phaser.Scene {
@@ -11,6 +11,8 @@ export default class JscDefaultScene extends Phaser.Scene {
   protected banner = new Banner()
   protected cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   protected controller!: Controller
+  private SAVE_GAME = 'SAVE_GAME'
+  protected saveFile!: SaveFile
 
   public constructor(config: string | Phaser.Types.Scenes.SettingsConfig, level: Level) {
     super(config)
@@ -25,6 +27,7 @@ export default class JscDefaultScene extends Phaser.Scene {
   }
 
   createMap = () => {
+    this.loadSavedGame()
     this.map = this.make.tilemap({ key: `${this.level.key}-map`, tileWidth: 64, tileHeight: 64 })
     this.physics.world.setBounds(0, 0, general.width - general.controller, general.height)
     this.tileset = this.map.addTilesetImage(this.level.main, `${this.level.key}-tiles`)
@@ -69,5 +72,28 @@ export default class JscDefaultScene extends Phaser.Scene {
       fsButton.setFrame(1)
       this.scale.startFullscreen()
     }
+  }
+
+  protected saveGame = () => {
+    localStorage.setItem(this.SAVE_GAME, JSON.stringify(this.saveFile))
+  }
+
+  private loadSavedGame = () => {
+    const savedJson = localStorage.getItem(this.SAVE_GAME)
+    if (savedJson) {
+      this.saveFile = JSON.parse(savedJson) as SaveFile
+    } else {
+      this.saveFile = {
+        level: {
+          name: general.levels.levelOne.key,
+          progress: 0,
+        },
+        position: {
+          x: (general.width - general.controller) / 2,
+          y: general.height / 2,
+        },
+      }
+    }
+    console.log(this.saveFile)
   }
 }

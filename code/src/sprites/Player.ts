@@ -26,10 +26,14 @@ export default class Player {
     this.speaker.preload(scene)
   }
 
-  create = (scene: Phaser.Scene, cursor: Phaser.Types.Input.Keyboard.CursorKeys, controller: Controller): void => {
-    this.player = scene.physics.add
-      .sprite((general.width - general.controller) / 2, general.height / 2, this.name)
-      .setBounce(0)
+  create = (
+    x: number,
+    y: number,
+    scene: Phaser.Scene,
+    cursor: Phaser.Types.Input.Keyboard.CursorKeys,
+    controller: Controller,
+  ): void => {
+    this.player = scene.physics.add.sprite(x, y, this.name).setBounce(0)
     const body = this.player.body as Phaser.Physics.Arcade.Body
     body.setCollideWorldBounds(true)
     this.createFrameSets(scene)
