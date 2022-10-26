@@ -25,20 +25,25 @@ export default class Banner {
       '',
       this.FONT_SIZE,
     )
+  }
+
+  show = (scene: Phaser.Scene) => {
+    this.image.setVisible(true)
+    this.text.setVisible(true)
     this.image.setInteractive()
     this.image.on('pointerup', () => {
       this.executeCallback()
     })
+    scene.input.keyboard.on('keyup-SPACE', () => {
+      this.executeCallback()
+    })
   }
 
-  show = () => {
-    this.image.setVisible(true)
-    this.text.setVisible(true)
-  }
-
-  hide = () => {
+  hide = (scene: Phaser.Scene) => {
     this.image.setVisible(false)
     this.text.setVisible(false)
+    this.image.removeInteractive()
+    scene.input.keyboard.off('keyup-SPACE')
   }
 
   showText = (text: string | string[], callback?: () => void) => {
@@ -49,6 +54,7 @@ export default class Banner {
   }
 
   private executeCallback = () => {
+    console.log('Banner.executeCallback')
     if (this.onPointerUp) {
       this.onPointerUp()
     }

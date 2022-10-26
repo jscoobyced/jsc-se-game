@@ -3,7 +3,6 @@ import JscDefaultScene from './JscDefaultScene'
 
 export default class JscMaGameIntro extends JscDefaultScene {
   private logo!: Phaser.GameObjects.Image
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 
   public constructor() {
     super(general.levels.intro.key, general.levels.intro)
@@ -17,7 +16,7 @@ export default class JscMaGameIntro extends JscDefaultScene {
   create = (): void => {
     this.createMap()
     this.createLayers()
-    this.cursors = this.input.keyboard.createCursorKeys()
+    this.cursor = this.input.keyboard.createCursorKeys()
     this.logo = this.add.image((this.game.canvas.width + general.controller) / 2, 256, 'logo')
     this.tweens.add({
       targets: this.logo,
@@ -33,7 +32,7 @@ export default class JscMaGameIntro extends JscDefaultScene {
   }
 
   update = () => {
-    if (this.cursors.down.isDown || this.cursors.up.isDown || this.cursors.right.isDown || this.cursors.left.isDown) {
+    if (this.cursor.down.isDown || this.cursor.up.isDown || this.cursor.right.isDown || this.cursor.left.isDown) {
       this.scene.start(general.levels.levelOne.key)
     }
   }

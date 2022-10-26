@@ -4,11 +4,13 @@ import Speaker from '../sprites/Speaker'
 
 export default class ConversationService {
   private banner: Banner
+  private scene: Phaser.Scene
   private dialogs: Dialog[] = []
   private previousSpeaker!: Speaker
 
-  public constructor(banner: Banner) {
+  public constructor(banner: Banner, scene: Phaser.Scene) {
     this.banner = banner
+    this.scene = scene
   }
 
   public resetConversation = () => {
@@ -16,12 +18,11 @@ export default class ConversationService {
   }
 
   public addToConversation = (dialog: Dialog) => {
-    console.log(dialog.speech)
     this.dialogs.push(dialog)
   }
 
   public startConversation = () => {
-    this.banner.show()
+    this.banner.show(this.scene)
     this.continueConversation()
   }
 
@@ -36,7 +37,7 @@ export default class ConversationService {
       this.previousSpeaker?.talk()
       if (speech) this.banner.showText(speech, this.continueConversation)
     } else {
-      this.banner.hide()
+      this.banner.hide(this.scene)
     }
   }
 }

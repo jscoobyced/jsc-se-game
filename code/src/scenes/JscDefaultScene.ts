@@ -37,7 +37,7 @@ export default class JscDefaultScene extends Phaser.Scene {
       this.toggleFullScreen(fsButton)
     })
     this.banner.create(this)
-    this.banner.hide()
+    this.banner.hide(this)
     this.cursor = this.input.keyboard.createCursorKeys()
     if (this.game.device.os.android || this.game.device.os.iPad || this.game.device.os.iPhone) {
       this.controller = new Controller(this)

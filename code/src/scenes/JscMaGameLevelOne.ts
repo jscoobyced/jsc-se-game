@@ -8,7 +8,7 @@ import JscDefaultScene from './JscDefaultScene'
 export default class JscMaGameLevelOne extends JscDefaultScene {
   private player = new Player()
   private forestGuy = new Npc('Jordan', 'forest-guy')
-  private conversationService: ConversationService = new ConversationService(this.banner)
+  private conversationService!: ConversationService
 
   public constructor() {
     super(general.levels.levelOne.key, general.levels.levelOne)
@@ -25,11 +25,19 @@ export default class JscMaGameLevelOne extends JscDefaultScene {
     this.player.create(this, this.cursor, this.controller)
     this.createLayers(this.player.getPlayer())
     this.forestGuy.create(this)
-    this.physics.add.collider(
-      this.player.getPlayer(),
-      this.forestGuy.getNpc(),
-      this.conversationService.startConversation,
-    )
+    this.physics.add.collider(this.player.getPlayer(), this.forestGuy.getNpc(), this.startConversation)
+    this.conversationService = new ConversationService(this.banner, this)
+  }
+
+  update = (time: number): void => {
+    if (!this.forestGuy.getSpeaker().isTalking()) {
+      this.player.update(time)
+    } else {
+      this.player.stop()
+    }
+  }
+
+  private startConversation = () => {
     const forestGuySpeaker = this.forestGuy.getSpeaker()
     const playerSpeaker = this.player.getSpeaker()
     this.conversationService.addToConversation(
@@ -41,13 +49,6 @@ export default class JscMaGameLevelOne extends JscDefaultScene {
     this.conversationService.addToConversation(
       new Dialog(forestGuySpeaker, forestGuySpeaker.getSpeech(this, 'level-one-intro-02')),
     )
-  }
-
-  update = (time: number): void => {
-    if (!this.forestGuy.getSpeaker().isTalking()) {
-      this.player.update(time)
-    } else {
-      this.player.stop()
-    }
+    this.conversationService.startConversation()
   }
 }
