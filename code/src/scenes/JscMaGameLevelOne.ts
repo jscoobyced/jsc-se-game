@@ -1,14 +1,14 @@
 import general from '../config/general.json'
-import SpeakerController from '../SpeakerController'
+import Dialog from '../models/Dialog'
+import ConversationService from '../services/ConversationService'
 import Npc from '../sprites/Npc'
 import Player from '../sprites/Player'
-import Speaker from '../sprites/Speaker'
 import JscDefaultScene from './JscDefaultScene'
 
-export default class JscMaGameLevelOne extends JscDefaultScene implements SpeakerController {
+export default class JscMaGameLevelOne extends JscDefaultScene {
   private player = new Player()
   private forestGuy = new Npc('Jordan', 'forest-guy')
-  private speakers: Speaker[] = []
+  private conversationService: ConversationService = new ConversationService(this.banner)
 
   public constructor() {
     super(general.levels.levelOne.key, general.levels.levelOne)
@@ -25,7 +25,22 @@ export default class JscMaGameLevelOne extends JscDefaultScene implements Speake
     this.player.create(this, this.cursor, this.controller)
     this.createLayers(this.player.getPlayer())
     this.forestGuy.create(this)
-    this.physics.add.collider(this.player.getPlayer(), this.forestGuy.getNpc(), this.talkForestGuy)
+    this.physics.add.collider(
+      this.player.getPlayer(),
+      this.forestGuy.getNpc(),
+      this.conversationService.startConversation,
+    )
+    const forestGuySpeaker = this.forestGuy.getSpeaker()
+    const playerSpeaker = this.player.getSpeaker()
+    this.conversationService.addToConversation(
+      new Dialog(forestGuySpeaker, forestGuySpeaker.getSpeech(this, 'level-one-intro-01')),
+    )
+    this.conversationService.addToConversation(
+      new Dialog(playerSpeaker, playerSpeaker.getSpeech(this, 'level-one-intro')),
+    )
+    this.conversationService.addToConversation(
+      new Dialog(forestGuySpeaker, forestGuySpeaker.getSpeech(this, 'level-one-intro-02')),
+    )
   }
 
   update = (time: number): void => {
@@ -34,22 +49,5 @@ export default class JscMaGameLevelOne extends JscDefaultScene implements Speake
     } else {
       this.player.stop()
     }
-  }
-
-  public hasMoreSpeaker = (): boolean => {
-    return this.speakers.length > 0
-  }
-
-  public nextSpeaker(): Speaker | undefined {
-    return this.speakers.shift()
-  }
-
-  public addSpeaker(speaker: Speaker): void {
-    this.speakers.push(speaker)
-  }
-
-  private talkForestGuy = () => {
-    this.addSpeaker(this.player.getSpeaker())
-    this.forestGuy.getSpeaker().startTalking(this.banner, this)
   }
 }

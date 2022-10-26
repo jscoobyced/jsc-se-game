@@ -42,9 +42,6 @@ export default class Banner {
   }
 
   showText = (text: string | string[], callback?: () => void) => {
-    if (!this.image.visible) {
-      this.show()
-    }
     this.text.setText(text)
     if (callback) {
       this.onPointerUp = callback

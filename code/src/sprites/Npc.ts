@@ -20,7 +20,7 @@ export default class Npc {
       `${general.baseUrls.images}/${this.sprite}.png`,
       `${general.baseUrls.json}/${this.sprite}.json`,
     )
-    this.speaker = new Speaker(this.name, 'levelOne', 'npcs', 'forest-guy', 'level-one')
+    this.speaker = new Speaker(this.name, 'levelOne', 'npcs', 'forest-guy')
     this.speaker.preload(scene)
   }
 
