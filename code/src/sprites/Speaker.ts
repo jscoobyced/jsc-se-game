@@ -21,7 +21,12 @@ export default class Speaker {
   }
 
   create = (scene: Phaser.Scene): void => {
-    this.talkImage = scene.physics.add.image(50, 50, this.name, 'idle-01')
+    this.talkImage = scene.physics.add.image(
+      scene.game.canvas.width - general.controller + 50,
+      50,
+      this.name,
+      'idle-01',
+    )
     this.mute()
   }
 

@@ -104,7 +104,7 @@ export default class Controller {
   }
 
   private getLeftX = (): number => {
-    return this.fromEdge + this.radiusController
+    return general.width - general.controller + this.fromEdge + this.radiusController
   }
 
   private getLeftY = (): number => {
@@ -112,7 +112,7 @@ export default class Controller {
   }
 
   private getRightX = (): number => {
-    return this.fromEdge + this.radiusController * 5
+    return general.width - general.controller + this.fromEdge + this.radiusController * 5
   }
 
   private getRightY = (): number => {
@@ -120,7 +120,7 @@ export default class Controller {
   }
 
   private getDownX = (): number => {
-    return this.fromEdge + this.radiusController * 3
+    return general.width - general.controller + this.fromEdge + this.radiusController * 3
   }
 
   private getDownY = (): number => {
@@ -128,7 +128,7 @@ export default class Controller {
   }
 
   private getUpX = (): number => {
-    return this.fromEdge + this.radiusController * 3
+    return general.width - general.controller + this.fromEdge + this.radiusController * 3
   }
 
   private getUpY = (): number => {

@@ -25,7 +25,7 @@ export default class Npc {
   }
 
   create = (scene: Phaser.Scene): void => {
-    this.npc = scene.physics.add.staticSprite(920, 450, this.name)
+    this.npc = scene.physics.add.staticSprite(280, 450, this.name)
     this.createFrameSets(scene)
     this.npc.play(`idle-${this.name}`)
     this.speaker.create(scene)

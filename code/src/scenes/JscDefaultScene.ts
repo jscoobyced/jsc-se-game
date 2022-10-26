@@ -26,11 +26,11 @@ export default class JscDefaultScene extends Phaser.Scene {
 
   createMap = () => {
     this.map = this.make.tilemap({ key: `${this.level.key}-map`, tileWidth: 64, tileHeight: 64 })
-    this.physics.world.setBounds(general.controller, 0, general.width - general.controller, general.height)
+    this.physics.world.setBounds(0, 0, general.width - general.controller, general.height)
     this.tileset = this.map.addTilesetImage(this.level.main, `${this.level.key}-tiles`)
-    this.map.createLayer(this.level.ground, this.tileset, general.controller, 0)
+    this.map.createLayer(this.level.ground, this.tileset, 0, 0)
     const fsButton = this.add
-      .image(general.width - 16, 16, 'fullscreen', 0)
+      .image(general.width - general.controller - 16, 16, 'fullscreen', 0)
       .setOrigin(1, 0)
       .setInteractive()
     fsButton.on('pointerup', () => {
@@ -47,7 +47,7 @@ export default class JscDefaultScene extends Phaser.Scene {
 
   createLayers = (player?: Phaser.Physics.Arcade.Sprite): void => {
     this.level.layers.forEach((layer) => {
-      const current = this.map.createLayer(layer.key, this.tileset, general.controller, 0)
+      const current = this.map.createLayer(layer.key, this.tileset, 0, 0)
       layer.collisions?.forEach((collision) => {
         current.setCollisionBetween(collision[0], collision[1])
       })

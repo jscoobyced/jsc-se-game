@@ -28,7 +28,7 @@ export default class Player {
 
   create = (scene: Phaser.Scene, cursor: Phaser.Types.Input.Keyboard.CursorKeys, controller: Controller): void => {
     this.player = scene.physics.add
-      .sprite((general.width + general.controller) / 2 - 32, general.height / 2 - 32, this.name)
+      .sprite((general.width - general.controller) / 2, general.height / 2, this.name)
       .setBounce(0)
     const body = this.player.body as Phaser.Physics.Arcade.Body
     body.setCollideWorldBounds(true)

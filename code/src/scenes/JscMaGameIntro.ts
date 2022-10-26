@@ -17,7 +17,7 @@ export default class JscMaGameIntro extends JscDefaultScene {
     this.createMap()
     this.createLayers()
     this.cursor = this.input.keyboard.createCursorKeys()
-    this.logo = this.add.image((this.game.canvas.width + general.controller) / 2, 256, 'logo')
+    this.logo = this.add.image((this.game.canvas.width - general.controller) / 2, 256, 'logo')
     this.tweens.add({
       targets: this.logo,
       y: this.game.canvas.height / 3,

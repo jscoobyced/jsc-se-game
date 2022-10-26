@@ -15,10 +15,10 @@ export default class Banner {
 
   create = (scene: Phaser.Scene): void => {
     this.image = scene.physics.add.image(0, 0, 'banner')
-    this.image.setX(this.BANNER_PAD + this.image.displayWidth / 2)
+    this.image.setX(scene.game.canvas.width - general.controller + this.BANNER_PAD + this.image.displayWidth / 2)
     this.image.setY(this.BANNER_PAD + this.image.displayHeight / 2)
     this.text = scene.add.text(
-      this.image.originX + this.TEXT_PAD,
+      scene.game.canvas.width - general.controller + this.image.originX + this.TEXT_PAD,
       general['banner-x'] + this.image.originY + this.TEXT_PAD,
       '',
       { fontFamily: 'MumuFont', fontSize: `${this.FONT_SIZE}px`, color: 'brown' },
