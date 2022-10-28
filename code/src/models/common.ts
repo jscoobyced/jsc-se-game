@@ -9,11 +9,15 @@ export type Level = {
   }[]
 }
 
+export type SaveFileLevel = {
+  name: string
+  progress: number
+}
+
 export type SaveFile = {
-  level: {
-    name: string
-    progress: number
-  }
+  version: number
+  level: string
+  levels: Array<SaveFileLevel>
   position: {
     x: number
     y: number

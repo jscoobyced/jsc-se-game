@@ -8,6 +8,12 @@ export default class JscMaGameIntro extends JscDefaultScene {
     super(general.levels.intro.key, general.levels.intro)
   }
 
+  getPlayerPosition = (): { x: number; y: number } => {
+    return { x: 0, y: 0 }
+  }
+
+  shouldUpdate = () => false
+
   preload = (): void => {
     this.defaultPreload()
     this.load.image('logo', `${general.baseUrls.images}/mumu-adventures.png`)
@@ -27,13 +33,13 @@ export default class JscMaGameIntro extends JscDefaultScene {
       repeat: -1,
     })
     this.input.on('pointerdown', () => {
-      this.scene.start(this.saveFile.level.name)
+      this.goToScene(general.levels.levelOne.key)
     })
   }
 
   update = () => {
     if (this.cursor.down.isDown || this.cursor.up.isDown || this.cursor.right.isDown || this.cursor.left.isDown) {
-      this.scene.start(this.saveFile.level.name)
+      this.goToScene(general.levels.levelOne.key)
     }
   }
 }
