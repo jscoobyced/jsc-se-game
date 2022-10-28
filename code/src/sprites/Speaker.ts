@@ -7,7 +7,9 @@ export default class Speaker {
   private characterType!: string
   private character!: string
   private talkImage!: Phaser.Physics.Arcade.Image
+  private nameText!: Phaser.GameObjects.Text
   private isCurrentlyTalking = false
+  private FONT_SIZE = 54
 
   public constructor(name: string, file: string, characterType: string, character: string) {
     this.name = name
@@ -27,6 +29,11 @@ export default class Speaker {
       this.name,
       'idle-01',
     )
+    this.nameText = scene.add.text(scene.game.canvas.width - general.controller + 100, 25, `${this.name}:`, {
+      fontFamily: 'MumuFont',
+      fontSize: `${this.FONT_SIZE}px`,
+      color: 'brown',
+    })
     this.mute()
   }
 
@@ -35,14 +42,19 @@ export default class Speaker {
   talk = () => {
     this.isCurrentlyTalking = true
     this.talkImage.setVisible(true)
+    this.nameText.setVisible(true)
   }
 
   mute = () => {
     this.isCurrentlyTalking = false
     this.talkImage.setVisible(false)
+    this.nameText.setVisible(false)
   }
 
   getSpeech = (scene: Phaser.Scene, speech: string) => {
-    return scene.cache.json.get(`${this.name}SpeechText`)[this.characterType][this.character][speech]
+    const speechCache = scene.cache.json.get(`${this.name}SpeechText`)[this.characterType][this.character][speech]
+    return speechCache
   }
+
+  getName = () => this.name
 }

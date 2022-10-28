@@ -6,7 +6,7 @@ import Speaker from '../sprites/Speaker'
 import JscDefaultPlayerScene from './JscDefaultPlayerScene'
 
 export default class JscMaGameLevelOne extends JscDefaultPlayerScene {
-  private forestGuy = new Npc('Jordan', 'forest-guy')
+  private forestGuy = new Npc('Jordan', 'forest-guy', general.levels.levelOne.key, 'forest-guy')
   private conversationService!: ConversationService
 
   public constructor() {

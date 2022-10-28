@@ -4,7 +4,7 @@ import Controller from '../Controller'
 import Speaker from './Speaker'
 
 export default class Player {
-  private name = 'player'
+  private name = 'Mumu'
   private player!: Phaser.Physics.Arcade.Sprite
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys
   private PLAYER_VELOCITY_WALK = 200

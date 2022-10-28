@@ -3,15 +3,19 @@ import general from '../config/general.json'
 import Speaker from './Speaker'
 
 export default class Npc {
-  private name!: string
-  private sprite!: string
+  private name: string
+  private sprite: string
+  private levelName: string
+  private character: string
   private npc!: Phaser.Physics.Arcade.Sprite
   private NPC_FRAMERATE = 4
   private speaker!: Speaker
 
-  public constructor(name: string, sprite: string) {
+  public constructor(name: string, sprite: string, levelName: string, character: string) {
     this.name = name
     this.sprite = sprite
+    this.levelName = levelName
+    this.character = character
   }
 
   preload = (scene: Phaser.Scene): void => {
@@ -20,7 +24,7 @@ export default class Npc {
       `${general.baseUrls.images}/${this.sprite}.png`,
       `${general.baseUrls.json}/${this.sprite}.json`,
     )
-    this.speaker = new Speaker(this.name, 'levelOne', 'npcs', 'forest-guy')
+    this.speaker = new Speaker(this.name, this.levelName, 'npcs', this.character)
     this.speaker.preload(scene)
   }
 

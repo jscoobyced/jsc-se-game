@@ -44,8 +44,13 @@ export default class Banner {
     scene.input.keyboard.off('keyup-SPACE')
   }
 
-  showText = (text: string | string[], callback?: () => void) => {
-    this.text.setText(text)
+  showText = (text: string[], callback?: () => void) => {
+    const content = text.map((current, index) => {
+      if (index === 0) return '"' + current
+      if (index === text.length - 1) return current + '"'
+      return current
+    })
+    this.text.setText(content)
     if (callback) {
       this.onPointerUp = callback
     }

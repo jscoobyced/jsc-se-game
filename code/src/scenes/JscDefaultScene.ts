@@ -77,18 +77,6 @@ export default abstract class JscDefaultScene extends Phaser.Scene {
     this.scene.start(newLevel)
   }
 
-  /**
-   * Display a message in the side banner, and optionally executes the
-   * callback method if it is provided. The callback will be executed
-   * once all text has been displayed.
-   * @param {string[]} text the multi-line message to display in the banner
-   * @param {() => void} callback an optional function to execute after the
-   * message has been displayed
-   */
-  protected showText = (text: string[], callback?: () => void) => {
-    this.banner.showText(text, callback)
-  }
-
   private toggleFullScreen = (fsButton: Phaser.GameObjects.Image) => {
     if (this.scale.isFullscreen) {
       fsButton.setFrame(0)

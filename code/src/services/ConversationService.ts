@@ -44,6 +44,7 @@ export default class ConversationService {
     } else {
       this.banner.hide(this.scene)
       this.progressTracker.updateProgress(this.nextProgress)
+      this.resetConversation()
     }
   }
 }
