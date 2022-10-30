@@ -70,7 +70,7 @@
       "layers": [
         {
           "key": "house-bg",
-          "collisions": [[97, 98]]
+          "collisions": [[96, 98]]
         },
         {
           "key": "house-fg",

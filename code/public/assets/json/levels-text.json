@@ -13,13 +13,15 @@
         ["is always free in", "the Kingdom of", "Jaidee. Once you", "have 2 cups of", "coffee, bring it"],
         ["to Yana and Jo in", "order to wake them", "up. Good luck!"]
       ],
-      "level-one-intro-04": [["You need to bring", "coffee to your", "friends first."]]
+      "level-one-intro-04": [["You need to bring", "coffee to your", "friends first."]],
+      "level-one-intro-05": [["You found your", "friend's house. Now", "find the coffee."]]
     }
   },
   "player": {
     "mumu": {
       "level-one-intro-01": [["Well, hello to you!", "My name is Mumu.", "Nice to meet you!"]],
-      "level-one-intro-02": [["I am! I am!.", "What can I do", "to help?"]]
+      "level-one-intro-02": [["I am! I am!.", "What can I do", "to help?"]],
+      "level-two-house-01": [["This is Yana", "and Jo house.", "I need to find", "coffee for them."]]
     }
   }
 }

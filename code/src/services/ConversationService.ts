@@ -9,7 +9,7 @@ export default class ConversationService {
   private dialogs: Dialog[] = []
   private previousSpeaker!: Speaker
   private progressTracker!: ProgressTracker
-  private nextProgress = 0
+  private nextProgress = -1
 
   public constructor(banner: Banner, scene: Phaser.Scene) {
     this.banner = banner
@@ -43,7 +43,9 @@ export default class ConversationService {
       if (speech) this.banner.showText(speech, this.continueConversation)
     } else {
       this.banner.hide(this.scene)
-      this.progressTracker.updateProgress(this.nextProgress)
+      if (this.nextProgress !== -1) {
+        this.progressTracker.updateProgress(this.nextProgress)
+      }
       this.resetConversation()
     }
   }

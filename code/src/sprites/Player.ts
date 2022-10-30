@@ -22,7 +22,7 @@ export default class Player {
 
   preload = (scene: Phaser.Scene): void => {
     scene.load.atlas(this.name, `${general.baseUrls.images}/mumu.png`, `${general.baseUrls.json}/mumu.json`)
-    this.speaker = new Speaker(this.name, 'levelOne', 'player', 'mumu')
+    this.speaker = new Speaker(this.name, 'levels', 'player', 'mumu')
     this.speaker.preload(scene)
   }
 

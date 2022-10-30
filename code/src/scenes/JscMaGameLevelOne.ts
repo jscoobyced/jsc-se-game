@@ -6,7 +6,7 @@ import Speaker from '../sprites/Speaker'
 import JscDefaultPlayerScene from './JscDefaultPlayerScene'
 
 export default class JscMaGameLevelOne extends JscDefaultPlayerScene {
-  private forestGuy = new Npc('Jordan', 'forest-guy', general.levels.levelOne.key, 'forest-guy')
+  private forestGuy = new Npc('Jordan', 'forest-guy', 'levels', 'forest-guy')
   private conversationService!: ConversationService
 
   public constructor() {
@@ -17,7 +17,7 @@ export default class JscMaGameLevelOne extends JscDefaultPlayerScene {
     return general.levels.levelOne.key
   }
 
-  shouldUpdate = () => !this.forestGuy.getSpeaker().isTalking()
+  shouldUpdate = () => !this.forestGuy.getSpeaker().isTalking() && !this.player.getSpeaker().isTalking()
 
   colliding = (): void => {
     if (this.progressSaveService.getProgress() === 1) {
@@ -44,13 +44,18 @@ export default class JscMaGameLevelOne extends JscDefaultPlayerScene {
   private startConversation = () => {
     const forestGuySpeaker = this.forestGuy.getSpeaker()
     const playerSpeaker = this.player.getSpeaker()
-    const progress = this.progressSaveService.getProgress()
-    if (progress === 0) {
-      this.firstTask(playerSpeaker, forestGuySpeaker)
-    } else if (progress === 1) {
+    const progressLevelOne = this.progressSaveService.getProgress()
+    const progressLevelTwo = this.progressSaveService.getProgress(general.levels.levelTwo.key)
+    if (progressLevelOne === 1 && progressLevelTwo === 0) {
       this.secondTalk(forestGuySpeaker)
+      this.conversationService.startConversation(this.progressSaveService, -1)
+    } else if (progressLevelTwo === 1) {
+      this.thirdTalk(forestGuySpeaker)
+      this.conversationService.startConversation(this.progressSaveService, 1)
+    } else {
+      this.firstTask(playerSpeaker, forestGuySpeaker)
+      this.conversationService.startConversation(this.progressSaveService, 1)
     }
-    this.conversationService.startConversation(this.progressSaveService, 1)
   }
 
   private firstTask = (playerSpeaker: Speaker, forestGuySpeaker: Speaker) => {
@@ -73,6 +78,12 @@ export default class JscMaGameLevelOne extends JscDefaultPlayerScene {
 
   private secondTalk = (forestGuySpeaker: Speaker) => {
     forestGuySpeaker.getSpeech(this, 'level-one-intro-04').forEach((speech: string[]) => {
+      this.conversationService.addToConversation(new Dialog(forestGuySpeaker, speech))
+    })
+  }
+
+  private thirdTalk = (forestGuySpeaker: Speaker) => {
+    forestGuySpeaker.getSpeech(this, 'level-one-intro-05').forEach((speech: string[]) => {
       this.conversationService.addToConversation(new Dialog(forestGuySpeaker, speech))
     })
   }

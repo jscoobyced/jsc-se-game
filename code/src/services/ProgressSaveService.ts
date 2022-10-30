@@ -31,9 +31,10 @@ export default class ProgressSaveService implements ProgressTracker {
     this.saveGame()
   }
 
-  getProgress = () => {
+  getProgress = (levelKey?: string) => {
+    const levelToCheck = levelKey || this.level.key
     const index = this.saveFile.levels.findIndex((currentLevel) => {
-      return currentLevel.name === this.level.key
+      return currentLevel.name === levelToCheck
     })
     if (index >= 0) {
       return this.saveFile.levels[index].progress
