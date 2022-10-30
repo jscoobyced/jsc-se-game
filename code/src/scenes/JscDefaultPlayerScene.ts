@@ -1,5 +1,6 @@
 import Player from '../sprites/Player'
 import JscDefaultScene from './JscDefaultScene'
+import general from '../config/general.json'
 
 /**
  * This class manages all the default functionalities for a Phaser.Scene
@@ -28,6 +29,8 @@ export default abstract class JscDefaulPlayertScene extends JscDefaultScene {
    */
   abstract doCreate(): void
 
+  abstract colliding(): void
+
   preload = (): void => {
     this.defaultPreload()
     this.player.preload(this)
@@ -38,23 +41,20 @@ export default abstract class JscDefaulPlayertScene extends JscDefaultScene {
     this.createMap()
     const position = this.progressSaveService.getPlayerSavedPosition()
     this.player.create(position.x, position.y, this, this.cursor, this.controller)
-    this.player.getPlayer().body.world.on('worldbounds', this.colliding)
+    this.player.getPlayer().body.world.on('worldbounds', this.playerColliding)
     this.createLayers(this.player.getPlayer())
     this.doCreate()
   }
 
-  colliding = () => {
-    if (!this.isCollided) {
-      this.isCollided = true
-    }
-  }
-
   update = (time: number): void => {
-    if (this.shouldUpdate()) {
+    if (this.shouldUpdate() && !this.isCollided) {
       this.player.update(time)
       this.progressSaveService.updatePosition(this.getPlayerPosition())
     } else {
       this.player.stop()
+      if (this.isCollided) {
+        this.colliding()
+      }
     }
   }
 
@@ -63,5 +63,29 @@ export default abstract class JscDefaulPlayertScene extends JscDefaultScene {
       x: this.player.getPlayer().x,
       y: this.player.getPlayer().y,
     }
+  }
+
+  isPlayerExitingTop = () => {
+    return this.getPlayerPosition().y <= this.player.getPlayer().height / 2
+  }
+
+  isPlayerExitingBottom = () => {
+    return this.getPlayerPosition().y >= this.game.canvas.height - this.player.getPlayer().height / 2
+  }
+
+  isPlayerExitingLeft = () => {
+    return this.getPlayerPosition().x <= this.player.getPlayer().width / 2
+  }
+
+  isPlayerExitingRight = () => {
+    return this.getPlayerPosition().x >= this.game.canvas.width - general.controller - this.player.getPlayer().width / 2
+  }
+
+  protected resetCollision = () => {
+    this.isCollided = false
+  }
+
+  private playerColliding = () => {
+    this.isCollided = true
   }
 }

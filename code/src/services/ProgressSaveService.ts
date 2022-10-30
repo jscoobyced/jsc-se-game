@@ -26,6 +26,11 @@ export default class ProgressSaveService implements ProgressTracker {
     this.saveGame()
   }
 
+  updateLevelKey = (levelKey: string) => {
+    this.saveFile.level = levelKey
+    this.saveGame()
+  }
+
   getProgress = () => {
     const index = this.saveFile.levels.findIndex((currentLevel) => {
       return currentLevel.name === this.level.key
@@ -34,6 +39,10 @@ export default class ProgressSaveService implements ProgressTracker {
       return this.saveFile.levels[index].progress
     }
     return 0
+  }
+
+  getLevelKey = () => {
+    return this.saveFile.level
   }
 
   updatePosition = (position: { x: number; y: number }) => {
@@ -53,10 +62,10 @@ export default class ProgressSaveService implements ProgressTracker {
     else {
       this.saveFile = {
         version: 1,
-        level: general.levels.intro.key,
+        level: general.levels.levelOne.key,
         levels: [
           {
-            name: general.levels.intro.key,
+            name: general.levels.levelOne.key,
             progress: 0,
           },
         ],

@@ -19,6 +19,18 @@ export default class JscMaGameLevelOne extends JscDefaultPlayerScene {
 
   shouldUpdate = () => !this.forestGuy.getSpeaker().isTalking()
 
+  colliding = (): void => {
+    if (this.progressSaveService.getProgress() === 1) {
+      if (this.isPlayerExitingBottom()) {
+        this.goToScene(general.levels.levelTwo.key, this.player.getPlayer().x, this.player.getPlayer().height)
+      } else {
+        this.resetCollision()
+      }
+    } else {
+      this.resetCollision()
+    }
+  }
+
   doPreload = (): void => {
     this.forestGuy.preload(this)
   }

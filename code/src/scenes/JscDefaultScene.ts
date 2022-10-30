@@ -33,7 +33,7 @@ export default abstract class JscDefaultScene extends Phaser.Scene {
   abstract getPlayerPosition(): { x: number; y: number }
 
   protected defaultPreload = (): void => {
-    this.load.image(`${this.level.key}-tiles`, `${general.baseUrls.images}/${this.level.tile}-map.png`)
+    this.load.image(`${this.level.key}-tiles`, `${general.baseUrls.images}/levels-map.png`)
     this.banner.preload(this)
     this.load.tilemapTiledJSON(`${this.level.key}-map`, `${general.baseUrls.json}/${this.level.tile}-map.json`)
     this.load.spritesheet('fullscreen', 'assets/images/fullscreen.png', { frameWidth: 64, frameHeight: 64 })
@@ -73,7 +73,12 @@ export default abstract class JscDefaultScene extends Phaser.Scene {
     })
   }
 
-  protected goToScene = (newLevel: string) => {
+  protected goToScene = (newLevel: string, x: number, y: number) => {
+    this.progressSaveService.updatePosition({
+      x,
+      y,
+    })
+    this.progressSaveService.updateLevelKey(newLevel)
     this.scene.start(newLevel)
   }
 

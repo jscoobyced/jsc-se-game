@@ -33,13 +33,15 @@ export default class JscMaGameIntro extends JscDefaultScene {
       repeat: -1,
     })
     this.input.on('pointerdown', () => {
-      this.goToScene(general.levels.levelOne.key)
+      const position = this.progressSaveService.getPlayerSavedPosition()
+      this.goToScene(this.progressSaveService.getLevelKey(), position.x, position.y)
     })
   }
 
   update = () => {
     if (this.cursor.down.isDown || this.cursor.up.isDown || this.cursor.right.isDown || this.cursor.left.isDown) {
-      this.goToScene(general.levels.levelOne.key)
+      const position = this.progressSaveService.getPlayerSavedPosition()
+      this.goToScene(this.progressSaveService.getLevelKey(), position.x, position.y)
     }
   }
 }
